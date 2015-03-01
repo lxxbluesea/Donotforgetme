@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/importmenu1">
+
+    <Button android:id="@+id/selectormenu_btn_warn"
+        android:layout_width="@dimen/normal_menu_width"
+        android:layout_height="wrap_content"
+        android:textColor="@color/menu_textColor"
+        android:background="@drawable/menubackground"
+        android:text="创建提醒" />
+
+    <Button android:id="@+id/selectormenu_btn_note"
+        android:layout_width="@dimen/normal_menu_width"
+        android:layout_height="wrap_content"
+        android:textColor="@color/menu_textColor"
+        android:background="@drawable/menubackground"
+        android:text="创建备忘录" />
+</LinearLayout>

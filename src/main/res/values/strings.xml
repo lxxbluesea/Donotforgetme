@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">勿忘我</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="mainactivity_tab_item_normal_normal_text">常用</string>
+    <string name="mainactivity_tab_item_normal_search_text">查询</string>
+    <string name="mainactivity_tab_item_normal_setting_text">设置</string>
+    <string name="mainactivity_tab_item_normal_help_text">帮助</string>
+    <string name="title_activity_normal">常用</string>
+    <string name="title_activity_search">查询</string>
+    <string name="title_activity_setting">设置</string>
+    <string name="title_activity_executing">执行中</string>
+    <string name="title_activity_delay">滞后</string>
+    <string name="title_activity_delete">删除</string>
+    <string name="title_activity_finish">完成</string>
+    <string name="title_activity_setting_normal">基本设置</string>
+    <string name="title_activity_setting_warn">提醒</string>
+    <string name="title_activity_setting_backup">备份</string>
+    <string name="title_activity_add">添加</string>
+    <string name="title_activity_help">帮助</string>
+    <string name="return_text">返回</string>
+    <string name="save_text">保存</string>
+    <string name="add_tv_content">内容：</string>
+    <string name="add_btn_import">导入...</string>
+    <string name="add_tv_createdate">创建时间：</string>
+    <string name="add_tv_quickadd">快速添加：</string>
+    <string name="add_rb_halfhour">半小时</string>
+    <string name="add_rb_onehour">1小时</string>
+    <string name="add_rb_twohours">2小时</string>
+    <string name="add_rb_fourhours">4小时</string>
+    <string name="add_rb_oneday">1天后</string>
+    <string name="add_rb_twodays">2天后</string>
+    <string name="add_tv_startdate">开始时间：</string>
+    <string name="add_tv_enddate">结束时间：</string>
+    <string name="add_tv_warntime">提醒次数：</string>
+
+
+    <string name="importmenu_btn_import_sms">短信</string>
+    <string name="importmenu_btn_import_contact">通讯录</string>
+    <string name="importmenu_btn_import_calllist">通话记录</string>
+
+
+    <string name="warncontrol_tv_warntype">提醒方式：</string>
+
+
+    <string name="datetimeformat">yyyy-MM-dd HH:mm:ss</string>
+    <string name="backuptypetable">backuptype</string>
+    <string name="leveltable">leval</string>
+    <string name="permissiontable">permission</string>
+    <string name="statustable">Status</string>
+    <string name="noticetable">notice</string>
+    <string name="databaseName">warnMe</string>
+    <string name="databaseVersion">1</string>
+    <array name="initSql">
+        <item>CREATE TABLE BackupType (
+            id INT PRIMARY KEY,
+            name VARCHAR( 20 )
+            );
+        </item>
+        <item>CREATE TABLE Item (
+            ID INT PRIMARY KEY,
+            content VARCHAR( 500 ),
+            level INT,
+            createDatetime INTEGER,
+            beginDatetime INTEGER,
+            endDatetime INTEGER,
+            itemstatusid INT
+            );
+
+        </item>
+        <item>CREATE TABLE ItemNotice (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            itemID INT,
+            noticeid INT,
+            noticetime INTEGER
+            );
+        </item>
+        <item>CREATE TABLE ItemStatus (
+            ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            itemid INT,
+            statusid INT,
+            opdatetime INTEGER,
+            note VARCHAR( 200 )
+            );
+        </item>
+        <item>CREATE TABLE Notice (
+            ID INT PRIMARY KEY,
+            name VARCHAR( 20 ),
+            enable INT,
+            ringpath VARCHAR( 200 ),
+            zhendongnum INT
+            );
+        </item>
+        <item>CREATE TABLE Status (
+            ID INT PRIMARY KEY,
+            name VARCHAR( 20 )
+            );
+        </item>
+        <item>CREATE TABLE Submit (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title VARCHAR( 200 ),
+            content VARCHAR( 500 ),
+            contact VARCHAR( 20 )
+            );
+        </item>
+        <item>CREATE TABLE Backup (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            backuptypeid INT,
+            list VARCHAR( 200 ),
+            backupdir VARCHAR( 200 )
+            );
+        </item>
+        <item>CREATE TABLE BaseInfo (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            number VARCHAR( 20 ),
+            shownum INT,
+            showday INT,
+            backupdir VARCHAR( 200 ),
+            mailtype VARCHAR( 20 ),
+            mailname VARCHAR( 20 ),
+            mailpassword VARCHAR( 20 ),
+            smtp VARCHAR( 20 ),
+            pop3 VARCHAR( 20 ),
+            testmailresult INT
+            );
+        </item>
+        <item>CREATE TABLE Permission (
+            ID INT PRIMARY KEY,
+            name VARCHAR( 20 ),
+            Enable INT
+            );
+        </item>
+        <item>
+            CREATE TABLE Level (
+            id INT PRIMARY KEY,
+            name VARCHAR( 20 )
+            );
+
+        </item>
+    </array>
+    <array name="initData">
+        <item>insert into backuptype(id,name) values(1,"'本地备份'");</item>
+        <item>insert into backuptype(id,name) values(2,"'邮箱备份'");</item>
+
+
+        <item>insert into status(id,name) values(1,"'执行中'");</item>
+        <item>insert into status(id,name) values(2,"'完成'");</item>
+        <item>insert into status(id,name) values(3,"'滞后'");</item>
+        <item>insert into status(id,name) values(4,"'删除'");</item>
+        <item>insert into status(id,name) values(5,"'备忘录'");</item>
+
+
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(1,"'消息'",0,"''",0);
+        </item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(2,"'震动'",0,"''",0);
+        </item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(3,"'铃声'",0,"''",0);
+        </item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(4,"'短信'",0,"''",0);
+        </item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(5,"'语音'",0,"''",0);
+        </item>
+
+
+        <item>insert into permission(id,name,enable) values(1,"'通讯录'",0);</item>
+        <item>insert into permission(id,name,enable) values(2,"'短信'",0);</item>
+        <item>insert into permission(id,name,enable) values(3,"'通讯记录'",0);</item>
+        <item>insert into permission(id,name,enable) values(4,"'语音'",0);</item>
+
+        <item>insert into level(id,name) values(1,"'低'");</item>
+        <item>insert into level(id,name) values(2,"'中'");</item>
+        <item>insert into level(id,name) values(3,"'高'");</item>
+
+    </array>
+</resources>

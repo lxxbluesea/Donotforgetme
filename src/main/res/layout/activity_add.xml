@@ -1,0 +1,240 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.donotforgetme.Activities.Add"
+    android:background="@drawable/background">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/addtitlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <TextView
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:text="@string/add_tv_content" />
+
+            <EditText
+                android:id="@+id/add_et_content"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/add_et_content_height"
+                android:singleLine="false"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/add_btn_import"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_btn_import" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <TextView
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:text="@string/add_tv_createdate" />
+
+            <EditText
+                android:id="@+id/add_et_createdate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/normal_et_height"
+                android:singleLine="true"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <LinearLayout
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <CheckBox
+                    android:id="@+id/add_cb_quickadd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_tv_quickadd" />
+
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:id="@+id/add_rg_quickadd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/add_rb_halfhour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_rb_halfhour" />
+
+                    <RadioButton
+                        android:id="@+id/add_rb_onehour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checked="true"
+                        android:text="@string/add_rb_onehour" />
+
+                    <RadioButton
+                        android:id="@+id/add_rb_twohours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_rb_twohours" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/add_rb_fourhours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_rb_fourhours" />
+
+                    <RadioButton
+                        android:id="@+id/add_rb_oneday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_rb_oneday" />
+
+                    <RadioButton
+                        android:id="@+id/add_rb_twodays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_rb_twodays" />
+                </LinearLayout>
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <TextView
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:text="@string/add_tv_startdate" />
+
+            <EditText
+                android:id="@+id/add_et_startdate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/normal_et_height"
+                android:singleLine="true"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <TextView
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:text="@string/add_tv_enddate" />
+
+            <EditText
+                android:id="@+id/add_et_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/normal_et_height"
+                android:singleLine="true"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/background">
+
+            <TextView
+                android:layout_width="@dimen/add_tv_content_width"
+                android:layout_height="wrap_content"
+                android:text="@string/add_tv_warntime" />
+
+            <EditText
+                android:id="@+id/add_et_warntime"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/normal_et_height"
+                android:singleLine="true"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/add_ll_warntime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/background">
+
+
+                <com.example.donotforgetme.MyListener.MyWarnControl
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.example.donotforgetme.MyListener.MyWarnControl>
+
+                <com.example.donotforgetme.MyListener.MyWarnControl
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.example.donotforgetme.MyListener.MyWarnControl>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</LinearLayout>

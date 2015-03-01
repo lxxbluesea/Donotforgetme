@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="@dimen/normal_menu_width"
+    android:layout_height="wrap_content"
+    android:background="@drawable/importmenu">
+
+    <Button android:id="@+id/importmenu_btn_sms"
+        android:layout_width="@dimen/normal_menu_width"
+        android:layout_height="wrap_content"
+        android:textColor="@color/menu_textColor"
+        android:background="@drawable/menubackground"
+        android:text="@string/importmenu_btn_import_sms"/>
+
+    <Button android:id="@+id/importmenu_btn_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/menu_textColor"
+        android:background="@drawable/menubackground"
+        android:text="@string/importmenu_btn_import_contact"/>
+
+    <Button android:id="@+id/importmenu_btn_calllist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/menu_textColor"
+        android:background="@drawable/menubackground"
+        android:text="@string/importmenu_btn_import_calllist"/>
+
+
+</LinearLayout>
