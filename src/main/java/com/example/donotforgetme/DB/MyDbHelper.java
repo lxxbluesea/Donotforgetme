@@ -1,5 +1,6 @@
 package com.example.donotforgetme.DB;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -10,6 +11,10 @@ public class MyDbHelper {
 
     static SQLiteDatabase db;
 
+    /**
+     * 获得数据库实例
+     * @return
+     */
     public static SQLiteDatabase getDBInstance() {
 
         if (db == null) {
@@ -21,6 +26,27 @@ public class MyDbHelper {
             }
         }
         return db;
+    }
+
+    /**
+     * 返回指定表的最大ID号
+     * @param tablename
+     * @return
+     */
+
+    public static int getMaxID(String tablename) {
+        int maxid = 0;
+        Cursor cursor = db.query(tablename, new String[]{"max(id)"}, null, null, null, null, null);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                maxid = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+        return maxid ;
     }
 
     private MyDbHelper() {

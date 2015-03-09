@@ -1,12 +1,10 @@
 package com.example.donotforgetme.Entities;
 
-import java.util.Date;
-
 /**
  * Created by ZJGJK03 on 2015/2/25.
  */
 public class Item {
-    int ID,ItemStatusID;
+    int ID,NoticeTime,Level;
 
     String Content;
 
@@ -20,12 +18,12 @@ public class Item {
         this.ID = ID;
     }
 
-    public int getItemStatusID() {
-        return ItemStatusID;
+    public int getNoticeTime() {
+        return NoticeTime;
     }
 
-    public void setItemStatusID(int itemStatusID) {
-        ItemStatusID = itemStatusID;
+    public void setNoticeTime(int noticeTime) {
+        NoticeTime = noticeTime;
     }
 
     public String getContent() {
@@ -58,5 +56,13 @@ public class Item {
 
     public void setEndDateTime(long endDateTime) {
         EndDateTime = endDateTime;
+    }
+
+    public int getLevel() {
+        return Level;
+    }
+
+    public void setLevel(int level) {
+        Level = level;
     }
 }

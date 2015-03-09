@@ -48,7 +48,10 @@
 
     <string name="datetimeformat">yyyy-MM-dd HH:mm:ss</string>
     <string name="backuptypetable">backuptype</string>
-    <string name="leveltable">leval</string>
+    <string name="leveltable">level</string>
+    <string name="itemtable">item</string>
+    <string name="itemstatustable">itemstatus</string>
+    <string name="itemnoticetable">itemnotice</string>
     <string name="permissiontable">permission</string>
     <string name="statustable">Status</string>
     <string name="noticetable">notice</string>
@@ -67,7 +70,7 @@
             createDatetime INTEGER,
             beginDatetime INTEGER,
             endDatetime INTEGER,
-            itemstatusid INT
+            noticetime INT
             );
 
         </item>
@@ -153,16 +156,11 @@
         <item>insert into status(id,name) values(5,"'备忘录'");</item>
 
 
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(1,"'消息'",0,"''",0);
-        </item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(2,"'震动'",0,"''",0);
-        </item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(3,"'铃声'",0,"''",0);
-        </item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(4,"'短信'",0,"''",0);
-        </item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(5,"'语音'",0,"''",0);
-        </item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(1,"'消息'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(2,"'震动'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(3,"'铃声'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(4,"'短信'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(5,"'语音'",0,"''",0);</item>
 
 
         <item>insert into permission(id,name,enable) values(1,"'通讯录'",0);</item>

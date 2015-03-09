@@ -1,13 +1,21 @@
 package com.example.donotforgetme.Entities;
 
-import java.util.Date;
 
 /**
  * Created by ZJGJK03 on 2015/2/25.
  */
 public class ItemNotice {
-    int ID,ItemID,NoticeID;
+    int ID, ItemID, NoticeID, Type = ADD;
     long NoticeTime;
+    static final int ADD = 1, MODIFY = 2, DELETE = 3;
+
+    public int getType() {
+        return Type;
+    }
+
+    public void setType(int type) {
+        Type = type;
+    }
 
     public int getID() {
         return ID;

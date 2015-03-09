@@ -72,7 +72,7 @@ public class NoticeUtil {
                     notice.setName(cursor.getString(1));
                     notice.setEnable(cursor.getInt(2));
                     notice.setRingPath(cursor.getString(3));
-                    notice.setZhenDongNum(cursor.getInt(5));
+                    notice.setZhenDongNum(cursor.getInt(4));
 
                     noticeList.add(notice);
 

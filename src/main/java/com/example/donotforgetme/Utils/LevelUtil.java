@@ -47,7 +47,7 @@ public class LevelUtil {
             return levelList.get(0);
     }
 
-    public Level getBackupTypeByName(String name) {
+    public Level getLevelByName(String name) {
         List<Level> levelList = new ArrayList<Level>();
         Cursor cursor = DB.query(TableName, columns, "name=?", new String[]{name}, null, null, sortBy);
         getLevel(cursor, levelList);
