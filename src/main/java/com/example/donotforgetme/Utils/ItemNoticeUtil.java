@@ -49,9 +49,26 @@ public class ItemNoticeUtil {
         return noticeList;
     }
 
+    /**
+     * 获取ItemNotice对象，默认是铃声
+     * @return
+     */
     public ItemNotice getItemNotice() {
         ItemNotice notice=new ItemNotice();
         notice.setItemID(item.getID());
+        notice.setNoticeID(NoticeUtil.RING);
+        return notice;
+    }
+    /**
+     * 获取ItemNotice对象
+     * @param type 通过传入不同的类型，来获取不同的对象
+     * @return
+     */
+    public ItemNotice getItemNotice(int type)
+    {
+        ItemNotice notice=new ItemNotice();
+        notice.setItemID(item.getID());
+        notice.setNoticeID(NoticeUtil.getInstance().getNoticeByID(type).getID());
         return notice;
     }
 

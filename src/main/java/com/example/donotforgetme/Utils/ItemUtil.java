@@ -87,8 +87,8 @@ public class ItemUtil {
         itemNoticeUtil = ItemNoticeUtil.getInstance(item);
         noticeList = new ArrayList<ItemNotice>();
         noticeList.add(itemNoticeUtil.getItemNotice());
-        noticeList.add(itemNoticeUtil.getItemNotice());
-        noticeList.add(itemNoticeUtil.getItemNotice());
+        noticeList.add(itemNoticeUtil.getItemNotice(NoticeUtil.SMS));
+        noticeList.add(itemNoticeUtil.getItemNotice(NoticeUtil.VOICE));
         return noticeList;
     }
 
