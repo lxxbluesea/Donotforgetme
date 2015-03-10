@@ -58,6 +58,8 @@ public class ItemUtil {
     public Item getNewItem() {
         item = new Item();
         item.setID(MaxID);
+        getNewItemStatus();
+        getNewItemNotices();
         return item;
     }
 
@@ -206,6 +208,48 @@ public class ItemUtil {
      * 如果修改，Notice和Status可以为空
      *
      * @param item       需要保存的实例
+     * @return
+     */
+    public boolean SaveItem(Item item) {
+        boolean flag = false;
+        long result;
+        //int itemID = item.getID();
+        ContentValues values = new ContentValues();
+
+        values.put("id", item.getID());
+        values.put("content", item.getContent());
+        values.put("level", item.getLevel());
+        values.put("createdatetime", item.getCreateDateTime());
+        values.put("begindatetime", item.getBeginDateTime());
+        values.put("enddatetime", item.getEndDateTime());
+        values.put("noticetime", item.getNoticeTime());
+
+
+        try {
+            //添加一个新的Item
+
+            result = DB.insert(TableName, null, values);
+            if (result > 0) {
+                flag = itemNoticeUtil.AddItemNotices(noticeList);
+                flag = itemStatusUtil.AddItemStatus(status);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.endTransaction();
+        }
+
+        return flag;
+    }
+
+    /**
+     * 保存一个对象到数据库中
+     * 如果是新添加，则所有的参数必须全部提供
+     * 如果修改，Notice和Status可以为空
+     *
+     * @param item       需要保存的实例
      * @param noticeList
      * @param status
      * @param type       1为新增，2为更新
@@ -328,6 +372,56 @@ public class ItemUtil {
         status=itemStatusUtil.getItemStatus(type);
         flag=itemStatusUtil.AddItemStatus(status);
         return flag;
+    }
+
+    /**
+     * 删除一个Item
+     * @param id 传入需要删除的ID
+     * @return 删除成功，返回true,否则返回false
+     */
+    public boolean DeleteItem(int id)
+    {
+        boolean flag=false;
+        long result;
+        try {
+            result=DB.delete(TableName,"id=?",new String[]{id+""});
+            if(result>0)
+            {
+                flag=itemNoticeUtil.DeleteItemNotices();
+                flag=itemStatusUtil.DeleteItemStatus();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    /**
+     * 返回Item的总数量
+     * @return
+     */
+    public int getItemCount()
+    {
+        int count=0;
+        Cursor cursor=DB.query(TableName,new String[]{"count(id)"},null,null,null,null,null);
+        try
+        {
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                count=cursor.getInt(0);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            cursor.close();
+        }
+
+        return count;
     }
 
 

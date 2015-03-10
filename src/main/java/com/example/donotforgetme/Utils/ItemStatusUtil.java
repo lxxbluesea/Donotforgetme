@@ -111,6 +111,54 @@ public class ItemStatusUtil {
 
     }
 
+    /**
+     * 从数据中删除状态，此删除为物理删除，不可恢复
+     * 仅在测试时使用，正式的代码不使用
+     * @return
+     */
+    public boolean DeleteItemStatus()
+    {
+        boolean flag=false;
+        long result=0;
+        try
+        {
+            result=DB.delete(TableName,"itemid=?",new String[]{item.getID()+""});
+            if(result>0)
+            {
+                flag=true;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    /**
+     * 获得与Item相关联的状态的数量
+     * @return 返回状态的数量
+     */
+    public  int getItemStatusCount()
+    {
+        int count=0;
+        Cursor cursor=DB.query(TableName,new String[]{"count(id)"},"itemid=?",new String[]{item.getID()+""},null,null,null);
+        try
+        {
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                count=cursor.getInt(0);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            cursor.close();
+
+        }
+        return count;
+    }
     void getItemStatus(Cursor cursor, List<ItemStatus> statusList) {
         try {
             if (cursor != null && cursor.moveToFirst()) {

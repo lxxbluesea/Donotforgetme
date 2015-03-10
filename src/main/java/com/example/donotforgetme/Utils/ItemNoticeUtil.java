@@ -1,5 +1,6 @@
 package com.example.donotforgetme.Utils;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -95,7 +96,7 @@ public class ItemNoticeUtil {
         boolean flag ;
 
         ContentValues values = new ContentValues();
-        values.put("itemid", notice.getItemID());
+        values.put("itemid", item.getID());
         values.put("noticeid", notice.getNoticeID());
         values.put("noticetime", notice.getNoticeTime());
 
@@ -109,7 +110,7 @@ public class ItemNoticeUtil {
     public boolean ModifyItemNotice(ItemNotice notice) {
         boolean flag ;
         ContentValues values = new ContentValues();
-        values.put("itemid", notice.getItemID());
+        values.put("itemid", item.getID());
         values.put("noticeid", notice.getNoticeID());
         values.put("noticetime", notice.getNoticeTime());
 
@@ -165,6 +166,31 @@ public class ItemNoticeUtil {
         return flag;
     }
 
+    /**
+     * 获得与Item相关联的提醒的数量
+     * @return 返回提醒的数量
+     */
+    public  int getItemNoticeCount()
+    {
+        int count=0;
+        Cursor cursor=DB.query(TableName,new String[]{"count(id)"},"itemid=?",new String[]{item.getID()+""},null,null,null);
+        try
+        {
+            if(cursor!=null && cursor.moveToFirst())
+            {
+                count=cursor.getInt(0);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            cursor.close();
+
+        }
+
+        return count;
+    }
 
     void getItemNotice(Cursor cursor, List<ItemNotice> noticeList) {
         try {
