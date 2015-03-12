@@ -15,7 +15,8 @@ public class testItemUtil extends TestCase {
     ItemUtil itemUtil;
     Item item;
     boolean flag;
-
+    Date date;
+    long time;
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -23,13 +24,14 @@ public class testItemUtil extends TestCase {
             itemUtil=ItemUtil.getInstance();
 
         long offset= 60 * 60 * 1000;
-        Date date=new Date();
+        date=new Date();
+        time=date.getTime();
         item=itemUtil.getNewItem();
-        item.setCreateDateTime(date.getTime());
+        item.setCreateDateTime(time);
         item.setLevel(LevelUtil.AVERAGER);
         item.setContent("this is a test");
-        item.setBeginDateTime(date.getTime()+offset*2);
-        item.setEndDateTime(date.getTime()+offset*5);
+        item.setBeginDateTime(time+offset*2);
+        item.setEndDateTime(time+offset*5);
         item.setNoticeTime(3);
         itemUtil.setNoticeTimes(4);
 
@@ -103,7 +105,7 @@ public class testItemUtil extends TestCase {
 
     public void testSearchItemByDatetime()
     {
-        List<Item> itemList=itemUtil.getItemByExecuteDateTime(new Date().getTime()+60 * 60 * 1000);
+        List<Item> itemList=itemUtil.getItemByExecuteDateTime(time+(60 * 60 * 1000)*3);
         itemUtil.getItemByID(itemList.get(0).getID());
         assertEquals(1,itemList.size());
         assertEquals(1,itemList.get(0).getID());

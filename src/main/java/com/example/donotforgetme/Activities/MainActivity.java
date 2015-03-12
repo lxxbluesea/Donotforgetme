@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity{
     void init_AddBtn()
     {
         RadioButton radioButton = (RadioButton) MainActivity.this.findViewById(R.id.tab_item_add);
-        final MyPopWin popWin = new MyPopWin(LayoutInflater.from(MainActivity.this), radioButton, R.layout.selectormenu,0,-300);
+        final MyPopWin popWin = new MyPopWin(LayoutInflater.from(MainActivity.this), radioButton, R.layout.selectormenu,0,-330);
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

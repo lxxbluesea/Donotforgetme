@@ -1,4 +1,4 @@
-﻿package com.example.donotforgetme.Utils;
+package com.example.donotforgetme.Utils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -309,7 +309,7 @@ public class ItemUtil {
      */
     public List<Item> getItemByExecuteDateTime(long datetime) {
         List<Item> itemList = new ArrayList<Item>();
-        Cursor cursor = DB.query(TableName, columns, "begindatetime<? and enddatetime>?", new String[]{datetime + "", datetime + ""}, null, null, sortBy);
+        Cursor cursor = DB.query(TableName, columns, "begindatetime < ? and enddatetime > ?", new String[]{datetime + "", datetime + ""}, null, null, sortBy);
         getItem(cursor, itemList);
         return itemList;
     }
