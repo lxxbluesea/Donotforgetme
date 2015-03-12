@@ -1,4 +1,4 @@
-package com.example.donotforgetme.Utils;
+﻿package com.example.donotforgetme.Utils;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -48,18 +48,28 @@ public class ItemUtil {
         //ItemNoticeTableName=ApplicationUtil.getContext().getResources().getString(R.string.itemnoticetable);
         DB = MyDbHelper.getDBInstance();
         MaxID = MyDbHelper.getMaxID(TableName) + 1;
+
+        //实例化对象，并设置ID
+        item = new Item();
+        item.setID(MaxID);
+        //实例化两个对象
+        if(itemNoticeUtil==null)
+            itemNoticeUtil = ItemNoticeUtil.getInstance(item);
+        if(itemStatusUtil==null)
+            itemStatusUtil=ItemStatusUtil.getInstance(item);
+        //生成3个默认的提醒和1个状态
+        getNewItemNotices();
+        setNoticeTimes(item.getNoticeTime());
+        getNewItemStatus();
+
     }
 
     /**
-     * 返回Item的新对象，并设置好ID
+     * 返回Item的新对象
      *
      * @return
      */
     public Item getNewItem() {
-        item = new Item();
-        item.setID(MaxID);
-        getNewItemStatus();
-        getNewItemNotices();
         return item;
     }
 
@@ -74,8 +84,14 @@ public class ItemUtil {
         getItem(cursor, itemList);
         if (itemList.isEmpty())
             item = null;
-        else
+        else {
             item = itemList.get(0);
+            itemNoticeUtil=ItemNoticeUtil.getInstance(item);
+            itemStatusUtil=ItemStatusUtil.getInstance(item);
+            noticeList=itemNoticeUtil.getAllNotice();
+            status=itemStatusUtil.getCurrentStatus();
+            statusList=itemStatusUtil.getAllStatus();
+        }
 
         return item;
     }
@@ -86,7 +102,7 @@ public class ItemUtil {
      * @return
      */
     public List<ItemNotice> getNewItemNotices() {
-        itemNoticeUtil = ItemNoticeUtil.getInstance(item);
+
         noticeList = new ArrayList<ItemNotice>();
         noticeList.add(itemNoticeUtil.getItemNotice());
         noticeList.add(itemNoticeUtil.getItemNotice(NoticeUtil.SMS));
@@ -100,7 +116,6 @@ public class ItemUtil {
      * @return
      */
     public ItemStatus getNewItemStatus() {
-        itemStatusUtil = ItemStatusUtil.getInstance(item);
         status = itemStatusUtil.getItemStatus();
         return status;
     }
@@ -111,7 +126,6 @@ public class ItemUtil {
      * @return
      */
     public List<ItemNotice> getItemNotices() {
-        itemNoticeUtil = ItemNoticeUtil.getInstance(item);
         noticeList = itemNoticeUtil.getAllNotice();
         return noticeList;
     }
@@ -122,7 +136,6 @@ public class ItemUtil {
      * @return
      */
     public ItemStatus getItemStatus() {
-        itemStatusUtil = ItemStatusUtil.getInstance(item);
         status = itemStatusUtil.getCurrentStatus();
         return status;
     }
@@ -133,9 +146,108 @@ public class ItemUtil {
      * @return
      */
     public List<ItemStatus> getAllItemStatus() {
-        itemStatusUtil = ItemStatusUtil.getInstance(item);
         statusList = itemStatusUtil.getAllStatus();
         return statusList;
+    }
+
+    /**
+     * 设置提醒的次数,用于新添加，还没有保存到数据库中时
+     * 不建议直接使用Item.SetNoticeTime来设置
+     * 设计上的问题
+     * 后续再优化吧
+     * @param times
+     */
+    public void setNoticeTimes(int times)
+    {
+        if(noticeList!=null && !noticeList.isEmpty())
+        {
+            int size=noticeList.size();
+            //设置的次数大于已存在的次数
+            //则需要再添加提醒的数量
+            if(times>size)
+            {
+                int tmp=times-size;
+                for(int i=0;i<tmp;i++)
+                {
+                    noticeList.add(itemNoticeUtil.getItemNotice());
+                }
+            }
+            else if(times<size)//如果提醒的次数小于已存在的次数，需要删除
+            {
+                int tmp=size-times;
+                for(int i=0;i<tmp;i++) {
+                    noticeList.remove(noticeList.size() - 1);//删除最后一个元素
+                }
+            }
+            else//相等时就什么都不做
+            {
+
+            }
+            item.setNoticeTime(times);//设置提醒的次数
+            //这里处理提醒时间
+            //先获得两个时间差，再除以提醒次数，得出每次提醒的时间段
+            long timeoffset=item.getEndDateTime()-item.getBeginDateTime();
+            long offset=timeoffset/times;
+            //这里不设置最后一次提醒，放在下面的代码里处理，因为作除法操作时会涉及到四舍五入，很有可以最后一次提醒不太准，但也有可能只是差几十或几百毫秒
+            //所以这里需要实际的测试才有结果
+            for(int i=0;i<times-1;i++) {
+                noticeList.get(i).setNoticeTime(item.getBeginDateTime() + (i + 1) * offset);
+            }
+            //最后一次直接设置为结束时间
+            noticeList.get(times-1).setNoticeTime(item.getEndDateTime());
+        }
+    }
+
+    /**
+     * 修改提醒的次数,用于读取数据库中的Item
+     * @param times
+     */
+    public void ModifyNoticeTimes(int times)
+    {
+        if(noticeList!=null && !noticeList.isEmpty())
+        {
+            int size=noticeList.size();
+            //把所有的原始对象设置为修改的状态
+            //因为下面的代码将会修改其提醒的日期时间
+            for(int i=0;i<size;i++)
+            {
+                noticeList.get(i).setType(ItemNotice.MODIFY);
+            }
+            //设置的次数大于已存在的次数
+            //则需要再添加提醒的数量
+            if(times>size)
+            {
+                int tmp=times-size;
+                for(int i=0;i<tmp;i++)
+                {
+                    //新添加的提醒，状态为添加
+                    noticeList.add(itemNoticeUtil.getItemNotice());
+                }
+            }
+            else if(times<size)//如果提醒的次数小于已存在的次数，需要删除
+            {
+                int tmp=size-times;
+                for(int i=0;i<tmp;i++) {
+                    noticeList.get(size + i).setType(ItemNotice.DELETE);//删除最后一个元素
+                }
+            }
+            else//相等时就什么都不做
+            {
+
+            }
+            item.setNoticeTime(times);//设置提醒的次数
+            //这里处理提醒时间
+            //先获得两个时间差，再除以提醒次数，得出每次提醒的时间段
+            long timeoffset=item.getEndDateTime()-item.getBeginDateTime();
+            long offset=timeoffset/times;
+            //这里不设置最后一次提醒，放在下面的代码里处理，因为作除法操作时会涉及到四舍五入，很有可以最后一次提醒不太准，但也有可能只是差几十或几百毫秒
+            //所以这里需要实际的测试才有结果
+            for(int i=0;i<times-1;i++) {
+                noticeList.get(i).setNoticeTime(item.getBeginDateTime() + (i + 1) * offset);
+            }
+            //最后一次直接设置为结束时间
+            noticeList.get(times-1).setNoticeTime(item.getEndDateTime());
+        }
     }
 
     void getItem(Cursor cursor, List<Item> itemList) {
@@ -172,7 +284,7 @@ public class ItemUtil {
      */
     public List<Item> getItems(int type) {
         List<Item> itemList = new ArrayList<Item>();
-        Cursor cursor = DB.query(TableName, columns, " id in (select itemid from itemstatus where statusid=? group by itemid)", new String[]{type + "'"}, null, null, sortBy);
+        Cursor cursor = DB.query(TableName, columns, " id in (select itemid from itemstatus where statusid=? group by itemid)", new String[]{type + ""}, null, null, sortBy);
         getItem(cursor, itemList);
         return itemList;
     }
@@ -185,7 +297,7 @@ public class ItemUtil {
      */
     public List<Item> getItemByContent(String keyword) {
         List<Item> itemList = new ArrayList<Item>();
-        Cursor cursor = DB.query(TableName, columns, "content like %?%", new String[]{keyword}, null, null, sortBy);
+        Cursor cursor = DB.query(TableName, columns, "content like ? ", new String[]{"%"+keyword+"%"}, null, null, sortBy);
         getItem(cursor, itemList);
         return itemList;
     }
@@ -238,7 +350,7 @@ public class ItemUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DB.endTransaction();
+            //DB.endTransaction();
         }
 
         return flag;
@@ -250,12 +362,10 @@ public class ItemUtil {
      * 如果修改，Notice和Status可以为空
      *
      * @param item       需要保存的实例
-     * @param noticeList
-     * @param status
      * @param type       1为新增，2为更新
      * @return
      */
-    public boolean SaveItem(Item item, List<ItemNotice> noticeList, ItemStatus status, int type) {
+    public boolean SaveItem(Item item, int type) {
         boolean flag = false;
         long result;
         //int itemID = item.getID();
@@ -290,7 +400,11 @@ public class ItemUtil {
                         //处理提醒，
                         // 如果传入空，则不处理
                         for (ItemNotice notice : noticeList) {
-                            if (notice.getType() == 2)//修改
+                            if(notice.getType()==1)
+                            {
+                                flag=itemNoticeUtil.AddItemNotice(notice);
+                            }
+                            else if (notice.getType() == 2)//修改
                             {
                                 flag = itemNoticeUtil.ModifyItemNotice(notice);
                             } else if (notice.getType() == 3)//删除
@@ -351,7 +465,7 @@ public class ItemUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            DB.endTransaction();
+            //DB.endTransaction();
         }
 
         return flag;

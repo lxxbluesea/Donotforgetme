@@ -1,62 +1,113 @@
 package com.example.donotforgetme.Utils;
 
 import com.example.donotforgetme.Entities.Item;
+import com.example.donotforgetme.Entities.ItemNotice;
 
 import junit.framework.TestCase;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ZJGJK03 on 2015/3/10.
  */
 public class testItemUtil extends TestCase {
     ItemUtil itemUtil;
+    Item item;
+    boolean flag;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         if(itemUtil==null)
             itemUtil=ItemUtil.getInstance();
-    }
-
-    public void testAddItem()
-    {
-        if(itemUtil==null)
-            fail();
 
         long offset= 60 * 60 * 1000;
         Date date=new Date();
-        Item item=itemUtil.getNewItem();
+        item=itemUtil.getNewItem();
         item.setCreateDateTime(date.getTime());
         item.setLevel(LevelUtil.AVERAGER);
         item.setContent("this is a test");
         item.setBeginDateTime(date.getTime()+offset*2);
         item.setEndDateTime(date.getTime()+offset*5);
         item.setNoticeTime(3);
-        boolean flag;
+        itemUtil.setNoticeTimes(4);
+
         flag=itemUtil.SaveItem(item);
 
         assertEquals(true,flag);
+    }
 
-
-        int count=itemUtil.getItemCount();
-        assertEquals(1,count);
-        count=itemUtil.itemNoticeUtil.getItemNoticeCount();
-        assertEquals(3,count);
-        count=itemUtil.itemStatusUtil.getItemStatusCount();
-        assertEquals(1,count);
-
-
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
 
         flag=itemUtil.DeleteItem(item.getID());
         assertEquals(true,flag);
 
+    }
 
-        count=itemUtil.getItemCount();
-        assertEquals(0,count);
+    public void testItemInfo()
+    {
+
+        int count=itemUtil.getItemCount();
+        assertEquals(1,count);
         count=itemUtil.itemNoticeUtil.getItemNoticeCount();
-        assertEquals(0,count);
+        assertEquals(4,count);
         count=itemUtil.itemStatusUtil.getItemStatusCount();
-        assertEquals(0,count);
+        assertEquals(1,count);
+
+    }
+
+    public void testGetItemByType()
+    {
+        List<Item> itemList=itemUtil.getItems(StatusUtil.EXECUTE);
+        if(itemList==null)
+            fail();
+        assertEquals(1,itemList.size());
+        itemUtil.getItemByID(itemList.get(0).getID());
+        assertEquals(1,itemList.size());
+        assertEquals(1,itemList.get(0).getID());
+        assertEquals("this is a test",itemList.get(0).getContent());
+        assertEquals(itemList.get(0).getNoticeTime(),itemUtil.itemNoticeUtil.getItemNoticeCount());
+    }
+
+    public void testModifyItemInfo()
+    {
+        Item item1=itemUtil.getItemByID(1);
+        if(item1==null)
+            fail();
+
+        itemUtil.ModifyNoticeTimes(5);
+        assertEquals(ItemNotice.MODIFY,itemUtil.noticeList.get(3).getType());
+        assertEquals(ItemNotice.ADD,itemUtil.noticeList.get(4).getType());
+        itemUtil.SaveItem(item1,2);
+
+        int count=itemUtil.getItemCount();
+        assertEquals(1,count);
+        count=itemUtil.itemNoticeUtil.getItemNoticeCount();
+        assertEquals(item1.getNoticeTime(),count);
+        count=itemUtil.itemStatusUtil.getItemStatusCount();
+        assertEquals(1,count);
+    }
+
+    public void testSearchItemByContent()
+    {
+        List<Item> itemList=itemUtil.getItemByContent("test");
+        itemUtil.getItemByID(itemList.get(0).getID());
+        assertEquals(1,itemList.size());
+        assertEquals(1,itemList.get(0).getID());
+        assertEquals("this is a test",itemList.get(0).getContent());
+        assertEquals(itemList.get(0).getNoticeTime(),itemUtil.itemNoticeUtil.getItemNoticeCount());
+    }
+
+    public void testSearchItemByDatetime()
+    {
+        List<Item> itemList=itemUtil.getItemByExecuteDateTime(new Date().getTime()+60 * 60 * 1000);
+        itemUtil.getItemByID(itemList.get(0).getID());
+        assertEquals(1,itemList.size());
+        assertEquals(1,itemList.get(0).getID());
+        assertEquals("this is a test",itemList.get(0).getContent());
+        assertEquals(itemList.get(0).getNoticeTime(),itemUtil.itemNoticeUtil.getItemNoticeCount());
     }
 }

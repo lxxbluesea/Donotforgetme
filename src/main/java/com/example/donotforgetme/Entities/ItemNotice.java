@@ -7,7 +7,7 @@ package com.example.donotforgetme.Entities;
 public class ItemNotice {
     int ID, ItemID, NoticeID, Type = ADD;
     long NoticeTime;
-    static final int ADD = 1, MODIFY = 2, DELETE = 3;
+    public static final int ADD = 1, MODIFY = 2, DELETE = 3;
 
     public int getType() {
         return Type;

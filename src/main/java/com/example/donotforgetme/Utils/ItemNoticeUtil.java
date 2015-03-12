@@ -57,6 +57,7 @@ public class ItemNoticeUtil {
     public ItemNotice getItemNotice() {
         ItemNotice notice=new ItemNotice();
         notice.setItemID(item.getID());
+        notice.setType(ItemNotice.ADD);
         notice.setNoticeID(NoticeUtil.RING);
         return notice;
     }
@@ -81,7 +82,7 @@ public class ItemNoticeUtil {
             boolean result;
             for (ItemNotice notice : noticeList) {
                 result = AddItemNotice(notice);
-                if (!result) {
+                if (result) {
                     flag = true;
                 } else {
                     flag = false;

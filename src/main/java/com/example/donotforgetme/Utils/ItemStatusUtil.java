@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.donotforgetme.DB.MyDbHelper;
 import com.example.donotforgetme.Entities.Item;
 import com.example.donotforgetme.Entities.ItemNotice;
 import com.example.donotforgetme.Entities.ItemStatus;
@@ -32,6 +33,7 @@ public class ItemStatusUtil {
 
     private ItemStatusUtil(Item item) {
         TableName = ApplicationUtil.getContext().getResources().getString(R.string.itemstatustable);
+        DB= MyDbHelper.getDBInstance();
         this.item = item;
     }
 
@@ -94,7 +96,6 @@ public class ItemStatusUtil {
 
     public boolean AddItemStatus(ItemStatus status)
     {
-
         boolean flag;
         ContentValues values=new ContentValues();
         values.put("itemid",status.getItemID());
