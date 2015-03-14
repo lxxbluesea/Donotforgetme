@@ -37,14 +37,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/add_et_content_height"
                     android:singleLine="false"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_selector" />
 
                 <Button
                     android:id="@+id/add_btn_import"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_btn_import"
-                    android:background="@drawable/btnbackground" />
+                    android:layout_margin="@dimen/normalmargin"
+                    android:background="@drawable/btn_background" />
             </LinearLayout>
 
             <!--<LinearLayout-->
@@ -106,12 +108,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/add_rb_halfhour"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/add_rb_halfhour" />
 
                         <RadioButton
                             android:id="@+id/add_rb_onehour"
@@ -127,6 +123,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/add_rb_twohours" />
+                        <RadioButton
+                            android:id="@+id/add_rb_fourhours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add_rb_fourhours" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -134,12 +136,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/add_rb_fourhours"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/add_rb_fourhours" />
 
                         <RadioButton
                             android:id="@+id/add_rb_oneday"
@@ -154,6 +150,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/add_rb_twodays" />
+                        <RadioButton
+                            android:id="@+id/add_rb_threedays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add_rb_threedays" />
+
                     </LinearLayout>
                 </RadioGroup>
 
@@ -170,20 +173,21 @@
                     android:layout_height="wrap_content"
                     android:text="@string/add_tv_startdate" />
 
-                <EditText
-                    android:id="@+id/add_et_startdate"
+                <Button
+                    android:id="@+id/add_btn_startdate"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_et_height"
-                    android:singleLine="true"
+                    android:gravity="left"
                     android:layout_weight="1"
-                    android:enabled="false" />
+                    android:background="@drawable/button_selector"/>
 
-                <Button
-                    android:id="@+id/add_btn_selectbegindatetime"
-                    android:background="@drawable/btnbackground"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_btn_selectdatetime" />
+                <!--<Button-->
+                    <!--android:id="@+id/add_btn_selectbegindatetime"-->
+                    <!--android:background="@drawable/btn_background"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="@dimen/normalmargin"-->
+                    <!--android:text="@string/add_btn_selectdatetime" />-->
 
             </LinearLayout>
 
@@ -198,77 +202,101 @@
                     android:layout_height="wrap_content"
                     android:text="@string/add_tv_enddate" />
 
-                <EditText
-                    android:id="@+id/add_et_enddate"
+                <Button
+                    android:id="@+id/add_btn_enddate"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_et_height"
-                    android:singleLine="true"
                     android:layout_weight="1"
-                    android:enabled="true" />
+                    android:gravity="left"
+                    android:background="@drawable/button_selector"
+/>
 
-                <Button
-                    android:id="@+id/add_btn_selectenddatetime"
-                    android:background="@drawable/btnbackground"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_btn_selectdatetime" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/background">
-
-                <TextView
-                    android:layout_width="@dimen/add_tv_content_width"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_tv_warntime" />
-
-                <EditText
-                    android:id="@+id/add_et_warntime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/normal_et_height"
-                    android:singleLine="true"
-                    android:inputType="number"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/add_btn_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btnbackground"
-                    android:text="@string/add_btn_add_text" />
-
-                <Button
-                    android:id="@+id/add_btn_subtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btnbackground"
-                    android:text="@string/add_btn_subtract_text" />
+                <!--<Button-->
+                    <!--android:id="@+id/add_btn_selectenddatetime"-->
+                    <!--android:background="@drawable/btn_background"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="@dimen/normalmargin"-->
+                    <!--android:text="@string/add_btn_selectdatetime" />-->
 
             </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@drawable/background">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="@dimen/add_tv_content_width"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/add_tv_warntime" />-->
+
+            <!--<EditText-->
+            <!--android:id="@+id/add_et_warntime"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/normal_et_height"-->
+            <!--android:singleLine="true"-->
+            <!--android:inputType="number"-->
+            <!--android:layout_weight="1" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/add_btn_add"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/btnbackground"-->
+            <!--android:text="@string/add_btn_add_text" />-->
+
+            <!--<Button-->
+            <!--android:id="@+id/add_btn_subtract"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/btnbackground"-->
+            <!--android:text="@string/add_btn_subtract_text" />-->
+
+            <!--</LinearLayout>-->
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/add_ll_warntime"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@drawable/background">
 
-
-                    <com.example.donotforgetme.MyListener.MyWarnControl
+                    <LinearLayout
+                        android:id="@+id/add_ll_warntime"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></com.example.donotforgetme.MyListener.MyWarnControl>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <com.example.donotforgetme.MyListener.MyWarnControl
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></com.example.donotforgetme.MyListener.MyWarnControl>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button android:id="@+id/add_btn_add_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/normalmargin"
+                            android:background="@drawable/btn_background"
+                            android:text="@string/add_btn_add_warn_text" />
+
+                        <Button android:id="@+id/add_btn_delete_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="@dimen/normalmargin"
+                            android:background="@drawable/btn_background"
+                            android:text="@string/add_btn_delete_warn_text" />
+                    </LinearLayout>
+
 
                 </LinearLayout>
             </ScrollView>

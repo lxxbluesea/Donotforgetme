@@ -4,6 +4,7 @@ package com.example.donotforgetme.Utils;
  * Created by ZJGJK03 on 2015/3/12.
  */
 
+import android.widget.Button;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
+import com.example.donotforgetme.MyListener.MyDateTimePickDialogListener;
 import com.example.donotforgetme.R;
 
 /**
@@ -42,6 +44,18 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
     private String dateTime;
     private String initDateTime;
     private Activity activity;
+    private String selectDateTime;
+
+    //添加一个监听器，待日期时间设置后，需要执行的后续代码
+    private MyDateTimePickDialogListener dateTimePickDialogListener;
+
+    public String getSelectDateTime() {
+        return selectDateTime;
+    }
+
+    public void setDateTimePickDialogListener(MyDateTimePickDialogListener dateTimePickDialogListener) {
+        this.dateTimePickDialogListener = dateTimePickDialogListener;
+    }
 
     /**
      * 日期时间弹出选择框构造函数
@@ -95,11 +109,45 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         inputDate.setText(dateTime);
+                        if(dateTimePickDialogListener!=null)
+                            dateTimePickDialogListener.DateTimeChanged(inputDate);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //inputDate.setText("");
+                    }
+                }).show();
+
+        onDateChanged(null, 0, 0, 0);
+        return ad;
+    }
+    /**
+     * 弹出日期时间选择框方法
+    * @return
+     */
+    public AlertDialog dateTimePicKDialog(final Button inputDate) {
+        LinearLayout dateTimeLayout = (LinearLayout) activity
+                .getLayoutInflater().inflate(R.layout.common_datetime, null);
+        datePicker = (DatePicker) dateTimeLayout.findViewById(R.id.datepicker);
+        timePicker = (TimePicker) dateTimeLayout.findViewById(R.id.timepicker);
+        init(datePicker, timePicker);
+        timePicker.setIs24HourView(true);
+        timePicker.setOnTimeChangedListener(this);
+
+        ad = new AlertDialog.Builder(activity)
+                .setTitle(initDateTime)
+                .setView(dateTimeLayout)
+                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        inputDate.setText(dateTime);
+                        if(dateTimePickDialogListener!=null)
+                            dateTimePickDialogListener.DateTimeChanged(inputDate);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //selectDateTime = "";
                     }
                 }).show();
 
@@ -119,8 +167,8 @@ public class DateTimePickDialogUtil implements OnDateChangedListener,
         calendar.set(datePicker.getYear(), datePicker.getMonth(),
                 datePicker.getDayOfMonth(), timePicker.getCurrentHour(),
                 timePicker.getCurrentMinute());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat(ApplicationUtil.getContext().getResources().getString(R.string.datetimeformat1));
         dateTime = sdf.format(calendar.getTime());
         ad.setTitle(dateTime);
     }

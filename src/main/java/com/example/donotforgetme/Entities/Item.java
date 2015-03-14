@@ -4,7 +4,7 @@ package com.example.donotforgetme.Entities;
  * Created by ZJGJK03 on 2015/2/25.
  */
 public class Item {
-    int ID,NoticeTime=3,Level;
+    int ID,NoticeTime=0,Level;
 
     String Content;
 
@@ -23,6 +23,8 @@ public class Item {
     }
 
     public void setNoticeTime(int noticeTime) {
+        if(noticeTime<=0)
+            NoticeTime=0;
         NoticeTime = noticeTime;
     }
 

@@ -3,6 +3,7 @@ package com.example.donotforgetme.Entities;
 import com.example.donotforgetme.R;
 import com.example.donotforgetme.Utils.ApplicationUtil;
 import com.example.donotforgetme.Utils.ContactUtil;
+import com.example.donotforgetme.Utils.DateUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,9 +36,10 @@ public class SMSInfo {
     }
 
     public String getDate() {
-        Date date1=new Date(this.date);
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(ApplicationUtil.getContext().getResources().getString(R.string.datetimeformat));
-        return simpleDateFormat.format(date1);
+//        Date date1=new Date(this.date);
+//        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(ApplicationUtil.getContext().getResources().getString(R.string.datetimeformat));
+//        return simpleDateFormat.format(date1);
+        return DateUtil.getDateString(this.date);
     }
 
     public void setDate(long date) {

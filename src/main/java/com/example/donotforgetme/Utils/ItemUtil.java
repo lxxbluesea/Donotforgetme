@@ -12,6 +12,7 @@ import com.example.donotforgetme.Entities.ItemStatus;
 import com.example.donotforgetme.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +38,20 @@ public class ItemUtil {
     ItemNoticeUtil itemNoticeUtil;
     //实例对象
     Item item;
+
+    public List<ItemNotice> getNoticeList() {
+        return noticeList;
+    }
+    public ItemStatus getStatus() {
+        return status;
+    }
+
+    public List<ItemStatus> getStatusList() {
+        return statusList;
+    }
+
+
+
     List<ItemNotice> noticeList;
     ItemStatus status;
     List<ItemStatus> statusList;
@@ -52,6 +67,9 @@ public class ItemUtil {
         //实例化对象，并设置ID
         item = new Item();
         item.setID(MaxID);
+        item.setCreateDateTime(new Date().getTime());
+        item.setBeginDateTime(new Date().getTime());
+        item.setEndDateTime(new Date().getTime()+DateUtil.Onehour);
         //实例化两个对象
         if(itemNoticeUtil==null)
             itemNoticeUtil = ItemNoticeUtil.getInstance(item);
@@ -59,6 +77,7 @@ public class ItemUtil {
             itemStatusUtil=ItemStatusUtil.getInstance(item);
         //生成3个默认的提醒和1个状态
         getNewItemNotices();
+        //noticeList=new ArrayList<ItemNotice>();
         setNoticeTimes(item.getNoticeTime());
         getNewItemStatus();
 
@@ -159,6 +178,8 @@ public class ItemUtil {
      */
     public void setNoticeTimes(int times)
     {
+        if(times<=0)
+            return;
         if(noticeList!=null && !noticeList.isEmpty())
         {
             int size=noticeList.size();

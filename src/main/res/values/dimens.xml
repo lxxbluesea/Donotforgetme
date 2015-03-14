@@ -14,5 +14,5 @@
 
 
     <dimen name="warncontrol_margin">10dp</dimen>
-    <dimen name="warncontrol_height">40dp</dimen>
+    <dimen name="warncontrol_height">50dp</dimen>
 </resources>

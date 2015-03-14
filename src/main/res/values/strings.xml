@@ -33,12 +33,15 @@
     <string name="add_rb_fourhours">4小时</string>
     <string name="add_rb_oneday">1天后</string>
     <string name="add_rb_twodays">2天后</string>
+    <string name="add_rb_threedays">3天后</string>
     <string name="add_tv_startdate">开始时间：</string>
     <string name="add_tv_enddate">结束时间：</string>
     <string name="add_tv_warntime">提醒次数：</string>
     <string name="add_btn_selectdatetime">日期...</string>
     <string name="add_btn_add_text">+</string>
     <string name="add_btn_subtract_text">-</string>
+    <string name="add_btn_add_warn_text">添加提醒</string>
+    <string name="add_btn_delete_warn_text">删除提醒</string>
 
 
     <string name="importmenu_btn_import_sms">短信</string>
