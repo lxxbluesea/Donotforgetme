@@ -5,6 +5,10 @@
     android:orientation="vertical"
     tools:context="com.example.donotforgetme.Activities.MainActivity">
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/titlebar" />
     <FrameLayout
         android:id="@+id/tabs_content"
         android:layout_width="match_parent"

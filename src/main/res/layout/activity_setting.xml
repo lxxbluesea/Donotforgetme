@@ -5,10 +5,6 @@
     android:orientation="vertical"
     tools:context="com.example.donotforgetme.Activities.Setting">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/titlebar" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

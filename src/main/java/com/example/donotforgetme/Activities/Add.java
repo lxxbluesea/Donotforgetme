@@ -1,31 +1,30 @@
 package com.example.donotforgetme.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 import com.example.donotforgetme.Entities.Item;
+import com.example.donotforgetme.Entities.ItemNotice;
 import com.example.donotforgetme.MyListener.MyDateTimePickDialogListener;
 import com.example.donotforgetme.MyListener.MyWarnControl;
 import com.example.donotforgetme.R;
 import com.example.donotforgetme.MyListener.MyPopWin;
-import com.example.donotforgetme.Utils.ApplicationUtil;
 import com.example.donotforgetme.Utils.DateTimePickDialogUtil;
 import com.example.donotforgetme.Utils.DateUtil;
 import com.example.donotforgetme.Utils.ItemUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class Add extends Fragment {
+public class Add extends Activity {
 
     Button btn_import,btn_beginDate,btn_endDate,btn_addwarn,btn_deletewarn;
     //EditText et_beginDatetime,et_endDatetime;
@@ -38,20 +37,22 @@ public class Add extends Fragment {
     Item item;
     ItemUtil itemUtil;
 
-    //List<MyWarnControl>  warnControlList;
+    RadioGroup rg_quickAdd;
+    RadioButton rb_tab_normal;
+    Button btn_save;
+    EditText et_content;
+    Intent intent;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_add,container,false);
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add);
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        intent=getIntent();
+
         //这里可以添加代码
         init_controls();
         init_ImportBtn();
         InitItem();
-
     }
 
 
@@ -60,40 +61,152 @@ public class Add extends Fragment {
      */
     void InitItem()
     {
-        itemUtil=ItemUtil.getInstance();
+        itemUtil=new ItemUtil();
         item=itemUtil.getNewItem();
         btn_beginDate.setText(DateUtil.getDateString(item.getBeginDateTime()));
         btn_endDate.setText(DateUtil.getDateString(item.getEndDateTime()));
     }
 
     /**
+     * 重置页面
+     */
+    void RemoveItem()
+    {
+        itemUtil=new ItemUtil();
+        item=itemUtil.getNewItem();
+        btn_beginDate.setText(DateUtil.getDateString(item.getBeginDateTime()));
+        btn_endDate.setText(DateUtil.getDateString(item.getEndDateTime()));
+        rg_quickAdd.check(R.id.add_rb_onehour);
+        et_content.setText("");
+        ll_warn.removeAllViews();
+
+    }
+    /**
      * 初始化相关的控件
      */
     void init_controls()
     {
-        btn_beginDate=(Button)getActivity().findViewById(R.id.add_btn_startdate);
+        //显示开始日期和结束日期的两个按钮
+        btn_beginDate=(Button)this.findViewById(R.id.add_btn_startdate);
         btn_beginDate.setOnClickListener(listener);
-
-        btn_endDate=(Button)getActivity().findViewById(R.id.add_btn_enddate);
+        btn_endDate=(Button)this.findViewById(R.id.add_btn_enddate);
         btn_endDate.setOnClickListener(listener);
+        //===========结束============
 
-
-        btn_addwarn=(Button)getActivity().findViewById(R.id.add_btn_add_warn);
+        //添加提醒和删除提醒的按钮
+        btn_addwarn=(Button)this.findViewById(R.id.add_btn_add_warn);
         btn_addwarn.setOnClickListener(warnControlListener);
-        btn_deletewarn=(Button)getActivity().findViewById(R.id.add_btn_delete_warn);
+        btn_deletewarn=(Button)this.findViewById(R.id.add_btn_delete_warn);
         btn_deletewarn.setOnClickListener(warnControlListener);
+        //===========结束=========
 
-
-        ll_warn=(LinearLayout)getActivity().findViewById(R.id.add_ll_warntime);
-
+        //获取用来放提醒控件的布局
+        ll_warn=(LinearLayout)this.findViewById(R.id.add_ll_warntime);
+        //初始化日期
         initDateTime=DateUtil.getDateString(new Date().getTime());
 
+        //快速添加的RadioGroup
+        rg_quickAdd=(RadioGroup)this.findViewById(R.id.add_rg_quickadd);
+        rg_quickAdd.setOnCheckedChangeListener(rg_changeListener);
 
-        //Log.d("Add",initDateTime);
+        //获得Titlebar的保存按钮
+        btn_save=(Button)this.findViewById(R.id.title_btn_save);
+        btn_save.setOnClickListener(save_listener);
 
+        //内容编辑框
+        et_content=(EditText)this.findViewById(R.id.add_et_content);
 
-
+        //获得主框架的第一个Button
+        rb_tab_normal=(RadioButton)this.findViewById(R.id.tab_item_normal);
     }
+
+    /**
+     * 保存按钮，把当前的Item保存到数据库中
+     */
+    View.OnClickListener save_listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Toast.makeText(this."保存按钮",Toast.LENGTH_SHORT).show();
+            //保存时需要检查很多内容
+            /**
+             * 1、内容不能为空，如果为空提醒错误；
+             * 2、结束日期必须要大于开始日期，否则提醒错误；
+             * 3、提醒日期时间必须在开始日期和结束日期中间，否则提醒错误；
+             * 4、如果没有提醒则视为备忘录
+             */
+            if(TextUtils.isEmpty(et_content.getText().toString())) {
+                et_content.setError(getResources().getString(R.string.add_et_error_text));
+                return;
+            }
+            if(item.getBeginDateTime()>item.getEndDateTime())
+            {
+                btn_endDate.setError(getResources().getString(R.string.add_btnenddate_error_text));
+                return;
+            }
+            int itemcount=item.getNoticeTime();
+            for(int i=0;i<itemcount;i++)
+            {
+                long noticetime=((MyWarnControl)ll_warn.getChildAt(i)).getNotice().getNoticeTime();
+                if(noticetime<item.getBeginDateTime()|| noticetime>item.getEndDateTime())
+                {
+                    Toast.makeText(Add.this,getResources().getString(R.string.add_warncontrol_error_text),Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            //把提醒控件内的信息更新到ItemUtil中去
+            updateItemNoticeControls();
+
+            if(itemUtil.SaveItem())
+            {
+                finish();
+                //保存成功后，需要把主框架设置到
+                //RemoveItem();
+                //Toast.makeText(Add.this,getResources().getString(R.string.add_savesuccess_text),Toast.LENGTH_SHORT).show();
+                //rb_tab_normal.setChecked(true);
+            }
+            else
+            {
+                Toast.makeText(Add.this,getResources().getString(R.string.add_savefailed_text),Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    /**
+     * 快速设置事件
+     */
+    RadioGroup.OnCheckedChangeListener rg_changeListener=new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            long begintime = item.getBeginDateTime();
+            long endtime;
+            long offset = DateUtil.Onehour;
+            switch (checkedId) {
+                case R.id.add_rb_onehour:
+                    offset *= 1;
+                    break;
+                case R.id.add_rb_twohours:
+                    offset *= 2;
+                    break;
+                case R.id.add_rb_fourhours:
+                    offset *= 4;
+                    break;
+                case R.id.add_rb_oneday:
+                    offset *= 24;
+                    break;
+                case R.id.add_rb_twodays:
+                    offset *= 48;
+                    break;
+            }
+            endtime = begintime + offset;
+            item.setEndDateTime(endtime);
+            btn_endDate.setText(DateUtil.getDateString(endtime));
+
+            //重新设置次数，并重新计算提醒时间
+            itemUtil.setNoticeTimes(item.getNoticeTime());
+            //更新控件
+            updateControlsItemNotice();
+        }
+    };
 
     /**
      * 添加和删控件时所执行代码
@@ -109,7 +222,7 @@ public class Add extends Fragment {
                     item.setNoticeTime(count);
                     itemUtil.setNoticeTimes(count);
                     //添加Notice控件
-                    MyWarnControl warnControl = new MyWarnControl(Add.this.getActivity());
+                    MyWarnControl warnControl = new MyWarnControl(Add.this);
                     warnControl.setNotice(itemUtil.getNoticeList().get(count - 1));
                     ll_warn.addView(warnControl);
                     break;
@@ -147,24 +260,39 @@ public class Add extends Fragment {
     }
 
     /**
+     * 从Control里取出ItemNotice并更新到ItemUtil的ItemNotictList中
+     */
+    void updateItemNoticeControls()
+    {
+        int childCount=ll_warn.getChildCount();
+        //Log.d("Add",childCount+"");
+        for(int i=0;i<childCount;i++) {
+            ItemNotice my=((MyWarnControl)ll_warn.getChildAt(i)).getNotice();
+            itemUtil.getNoticeList().get(i).setNoticeID(my.getNoticeID());
+            itemUtil.getNoticeList().get(i).setNoticeTime(my.getNoticeTime());
+        }
+    }
+
+
+    /**
      * 弹出日期和时间的按钮
      */
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            dateTimePicKDialog = new DateTimePickDialogUtil(Add.this.getActivity(), ((Button)v).getText().toString());
+            dateTimePicKDialog = new DateTimePickDialogUtil(Add.this,((Button)v).getText().toString());
             dateTimePicKDialog.setDateTimePickDialogListener(new MyDateTimePickDialogListener() {
                 @Override
                 public void DateTimeChanged(View view) {
-                    switch (view.getId())
-                    {
-                        case R.id.add_btn_startdate:
-                            item.setBeginDateTime(DateUtil.getDateLong(btn_beginDate.getText().toString()));
-                            break;
-                        case R.id.add_btn_enddate:
-                            item.setEndDateTime(DateUtil.getDateLong(btn_endDate.getText().toString()));
-                            break;
-                    }
+//                    switch (view.getId())
+//                    {
+//                        case R.id.add_btn_startdate:
+//                            item.setBeginDateTime(DateUtil.getDateLong(btn_beginDate.getText().toString()));
+//                            break;
+//                        case R.id.add_btn_enddate:
+//                            item.setEndDateTime(DateUtil.getDateLong(btn_endDate.getText().toString()));
+//                            break;
+//                    }
                     //重新设置次数，并重新计算提醒时间
                     itemUtil.setNoticeTimes(item.getNoticeTime());
                     //更新控件
@@ -193,7 +321,7 @@ public class Add extends Fragment {
      */
     void init_ImportBtn()
     {
-        btn_import=(Button)getActivity().findViewById(R.id.add_btn_import);
+        btn_import=(Button)this.findViewById(R.id.add_btn_import);
         btn_import.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,7 +329,7 @@ public class Add extends Fragment {
             }
         });
 
-        LayoutInflater inflater=getActivity().getLayoutInflater();
+        LayoutInflater inflater=this.getLayoutInflater();
         popWin=new MyPopWin(inflater,btn_import,R.layout.importmenu);
     }
 

@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity{
 
         fragmentList.add(new Normal());
         fragmentList.add(new Search());
-        fragmentList.add(new Add());
+        fragmentList.add(new AddItem());
         fragmentList.add(new Setting());
         fragmentList.add(new Help());
     }

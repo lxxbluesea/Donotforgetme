@@ -14,6 +14,12 @@ public class MyPagerAdapter extends PagerAdapter {
     List<View> views;
     List<String> titles;
 
+    MyPageAdapterListener myPageAdapterListener;
+
+    public void setMyPageAdapterListener(MyPageAdapterListener myPageAdapterListener) {
+        this.myPageAdapterListener = myPageAdapterListener;
+    }
+
     /**
      *
      * @param views
@@ -46,6 +52,8 @@ public class MyPagerAdapter extends PagerAdapter {
         //return super.instantiateItem(container, position);
         //Log.d("instantiateItem","instantiateItem:"+position);
         container.addView(views.get(position));
+        if(myPageAdapterListener!=null)
+            myPageAdapterListener.Execute();
         return views.get(position);
     }
 

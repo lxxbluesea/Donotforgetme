@@ -7,15 +7,24 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.example.donotforgetme.Entities.Item;
 import com.example.donotforgetme.MyListener.MyClickTouchListener;
+import com.example.donotforgetme.MyListener.MyPageAdapterListener;
 import com.example.donotforgetme.MyListener.MyPageChangeListener;
 import com.example.donotforgetme.MyListener.MyPagerAdapter;
 import com.example.donotforgetme.R;
+import com.example.donotforgetme.Utils.DateUtil;
+import com.example.donotforgetme.Utils.ItemUtil;
+import com.example.donotforgetme.Utils.StatusUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Normal extends Fragment {
@@ -24,6 +33,15 @@ public class Normal extends Fragment {
     List<View> views;
     List<String> titles;
     ImageView cursor;
+
+
+    //Normal_Executing窗口的代码
+    ListView listView;
+    ItemUtil itemUtil;
+
+    //=========结束==========
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
@@ -61,10 +79,17 @@ public class Normal extends Fragment {
             titles.add(getResources().getString(R.string.title_activity_delete));
             titles.add(getResources().getString(R.string.title_activity_finish));
 
-            viewPager.setAdapter(new MyPagerAdapter(views,titles));
+            MyPagerAdapter myPagerAdapter=new MyPagerAdapter(views,titles);
+            myPagerAdapter.setMyPageAdapterListener(new MyPageAdapterListener() {
+                @Override
+                public void Execute() {
+                    initControls();
+                }
+            });
+
+            viewPager.setAdapter(myPagerAdapter);
             viewPager.setCurrentItem(0);
             viewPager.setOnPageChangeListener(new MyPageChangeListener(initTextView(),cursor,getDisplayMetrice(),4));
-
 
         }
     }
@@ -101,15 +126,52 @@ public class Normal extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics;
     }
-//
-//    /**
-//     * 得到游标图片的宽度
-//     * @return
-//     */
-//    int getCursorWidth()
-//    {
-//        int width= BitmapFactory.decodeResource(getResources(),R.drawable.cursor).getWidth();
-//        return 1;
-//    }
+
+
+    //以下代码是处理Normal_Executing
+
+    void initControls(){
+        listView=(ListView)getActivity().findViewById(R.id.normal_execute_listview);
+        itemUtil=new ItemUtil();
+        getExecuteDate();
+    }
+
+    void getExecuteDate()
+    {
+
+        List<Item> itemList=itemUtil.getItems(StatusUtil.EXECUTE);
+        List<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
+        if(!itemList.isEmpty())
+        {
+            for(Item item:itemList)
+            {
+                HashMap<String,Object> d=new HashMap<String, Object>();
+                d.put("content",item.getContent());
+                d.put("begindatetime", DateUtil.getDateString(item.getBeginDateTime()));
+                d.put("enddatetime",DateUtil.getDateString(item.getEndDateTime()));
+                datas.add(d);
+            }
+        }
+
+        SimpleAdapter simpleAdapter=new SimpleAdapter(this.getActivity(),datas,R.layout.listview_item,new String[]{"content","begindatetime","enddatetime"},new int[]{R.id.listview_item_lv_title,R.id.listview_item_1,R.id.listview_item_2});
+        listView.setAdapter(simpleAdapter);
+        listView.setOnItemClickListener(clickListener);
+        listView.setOnItemLongClickListener(longClickListener);
+    }
+
+    AdapterView.OnItemClickListener clickListener=new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+    };
+
+    AdapterView.OnItemLongClickListener longClickListener=new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            return false;
+        }
+    };
+    //=========结束==========
 
 }

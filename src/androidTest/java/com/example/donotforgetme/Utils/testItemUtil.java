@@ -20,24 +20,25 @@ public class testItemUtil extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        if(itemUtil==null)
-            itemUtil=ItemUtil.getInstance();
 
-        long offset= 60 * 60 * 1000;
-        date=new Date();
-        time=date.getTime();
-        item=itemUtil.getNewItem();
+        itemUtil = new ItemUtil();
+
+        long offset = 60 * 60 * 1000;
+        date = new Date();
+        time = date.getTime();
+        item = itemUtil.getNewItem();
         item.setCreateDateTime(time);
         item.setLevel(LevelUtil.AVERAGER);
         item.setContent("this is a test");
-        item.setBeginDateTime(time+offset*2);
-        item.setEndDateTime(time+offset*5);
+        item.setBeginDateTime(time + offset * 2);
+        item.setEndDateTime(time + offset * 5);
         item.setNoticeTime(3);
+        itemUtil.setItem(item);
         itemUtil.setNoticeTimes(4);
 
-        flag=itemUtil.SaveItem(item);
+        flag = itemUtil.SaveItem();
 
-        assertEquals(true,flag);
+        assertEquals(true, flag);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class testItemUtil extends TestCase {
         itemUtil.ModifyNoticeTimes(5);
         assertEquals(ItemNotice.MODIFY,itemUtil.noticeList.get(3).getType());
         assertEquals(ItemNotice.ADD,itemUtil.noticeList.get(4).getType());
-        itemUtil.SaveItem(item1,2);
+        itemUtil.SaveItem(2);
 
         int count=itemUtil.getItemCount();
         assertEquals(1,count);

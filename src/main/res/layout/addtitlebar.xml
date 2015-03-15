@@ -42,7 +42,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/title_tv_save"
+            android:id="@+id/title_btn_save"
             android:layout_margin="@dimen/normalmargin"
             android:layout_width="@dimen/normalwidthheight"
             android:layout_height="@dimen/normalwidthheight"

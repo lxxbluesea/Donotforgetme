@@ -22,14 +22,14 @@ public class ItemUtil {
 
     public static final int ADD = 1, UPDATE = 2;
 
-    private static ItemUtil ourInstance = new ItemUtil();
+    //private static ItemUtil ourInstance = new ItemUtil();
 
-    public static ItemUtil getInstance() {
-        return ourInstance;
-    }
+//    public static ItemUtil getInstance() {
+//        return ourInstance;
+//    }
 
-    String TableName;//,ItemStatusTableName,ItemNoticeTableName;
-    SQLiteDatabase DB;
+    String TableName= ApplicationUtil.getContext().getResources().getString(R.string.itemtable);;//,ItemStatusTableName,ItemNoticeTableName;
+    SQLiteDatabase DB = MyDbHelper.getDBInstance();
     String[] columns = {"id", "content", "level", "createdatetime", "begindatetime", "enddatetime", "noticetime"};
     String sortBy = "id asc";
     //获得可用ID
@@ -57,13 +57,9 @@ public class ItemUtil {
     List<ItemStatus> statusList;
 
 
-    private ItemUtil() {
-        TableName = ApplicationUtil.getContext().getResources().getString(R.string.itemtable);
-        //ItemStatusTableName=ApplicationUtil.getContext().getResources().getString(R.string.itemstatustable);
-        //ItemNoticeTableName=ApplicationUtil.getContext().getResources().getString(R.string.itemnoticetable);
-        DB = MyDbHelper.getDBInstance();
-        MaxID = MyDbHelper.getMaxID(TableName) + 1;
+    public ItemUtil() {
 
+        MaxID = MyDbHelper.getMaxID(TableName) + 1;
         //实例化对象，并设置ID
         item = new Item();
         item.setID(MaxID);
@@ -90,6 +86,14 @@ public class ItemUtil {
      */
     public Item getNewItem() {
         return item;
+    }
+
+    /**
+     * 设置Item对象，在即将保存前进行设置，并作为保存的对象
+     * @param item
+     */
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     /**
@@ -339,11 +343,9 @@ public class ItemUtil {
      * 保存一个对象到数据库中
      * 如果是新添加，则所有的参数必须全部提供
      * 如果修改，Notice和Status可以为空
-     *
-     * @param item       需要保存的实例
      * @return
      */
-    public boolean SaveItem(Item item) {
+    public boolean SaveItem() {
         boolean flag = false;
         long result;
         //int itemID = item.getID();
@@ -382,11 +384,10 @@ public class ItemUtil {
      * 如果是新添加，则所有的参数必须全部提供
      * 如果修改，Notice和Status可以为空
      *
-     * @param item       需要保存的实例
      * @param type       1为新增，2为更新
      * @return
      */
-    public boolean SaveItem(Item item, int type) {
+    public boolean SaveItem(int type) {
         boolean flag = false;
         long result;
         //int itemID = item.getID();
