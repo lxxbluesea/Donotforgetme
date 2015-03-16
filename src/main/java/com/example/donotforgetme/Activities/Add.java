@@ -38,23 +38,32 @@ public class Add extends Activity {
     ItemUtil itemUtil;
 
     RadioGroup rg_quickAdd;
-    RadioButton rb_tab_normal;
+    //RadioButton rb_tab_normal;
     Button btn_save;
     EditText et_content;
     Intent intent;
+
+    int itemID=-1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
         intent=getIntent();
+        if(intent!=null) {
+            itemID = intent.getIntExtra("id", -1);
+        }
 
         //这里可以添加代码
         init_controls();
         init_ImportBtn();
-        InitItem();
+        if(itemID==-1) {
+            InitItem();
+        }
+        else {//如果不是-1，则传入ID，并获得此Item
+            InitItem(itemID);
+        }
     }
-
 
     /**
      * 初始化Item和ItemUtil对象
@@ -66,7 +75,26 @@ public class Add extends Activity {
         btn_beginDate.setText(DateUtil.getDateString(item.getBeginDateTime()));
         btn_endDate.setText(DateUtil.getDateString(item.getEndDateTime()));
     }
-
+    void InitItem(int id) {
+        itemUtil = new ItemUtil(id);
+        item=itemUtil.getItem();
+        if (item.equals(null)) {
+            Toast.makeText(this, getResources().getString(R.string.add_item_null), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        //设置内容
+        et_content.setText(item.getContent());
+        //设置开始时间和结束时间
+        btn_beginDate.setText(DateUtil.getDateString(item.getBeginDateTime()));
+        btn_endDate.setText(DateUtil.getDateString(item.getEndDateTime()));
+        //初始化提醒控件
+        int noticecount = item.getNoticeTime();
+        for (int i = 0; i < noticecount; i++) {
+            MyWarnControl warnControl = new MyWarnControl(Add.this);
+            warnControl.setNotice(itemUtil.getNoticeList().get(i));
+            ll_warn.addView(warnControl);
+        }
+    }
     /**
      * 重置页面
      */
@@ -116,8 +144,8 @@ public class Add extends Activity {
         //内容编辑框
         et_content=(EditText)this.findViewById(R.id.add_et_content);
 
-        //获得主框架的第一个Button
-        rb_tab_normal=(RadioButton)this.findViewById(R.id.tab_item_normal);
+//        //获得主框架的第一个Button
+//        rb_tab_normal=(RadioButton)this.findViewById(R.id.tab_item_normal);
     }
 
     /**
@@ -138,6 +166,11 @@ public class Add extends Activity {
                 et_content.setError(getResources().getString(R.string.add_et_error_text));
                 return;
             }
+            else
+            {
+                //设置内容
+                item.setContent(et_content.getText().toString().trim());
+            }
             if(item.getBeginDateTime()>item.getEndDateTime())
             {
                 btn_endDate.setError(getResources().getString(R.string.add_btnenddate_error_text));
@@ -156,7 +189,17 @@ public class Add extends Activity {
             //把提醒控件内的信息更新到ItemUtil中去
             updateItemNoticeControls();
 
-            if(itemUtil.SaveItem())
+            boolean result;
+            if(itemID==-1)
+            {
+                result=itemUtil.SaveItem();//新增
+            }
+            else
+            {
+                result=itemUtil.SaveItem(2);//修改
+            }
+
+            if(result)
             {
                 finish();
                 //保存成功后，需要把主框架设置到

@@ -17,13 +17,13 @@ import java.util.List;
  * Created by ZJGJK03 on 2015/3/9.
  */
 public class ItemStatusUtil {
-    private static ItemStatusUtil ourInstance;
-
-    public static ItemStatusUtil getInstance(Item item) {
-        if (ourInstance == null)
-            ourInstance = new ItemStatusUtil(item);
-        return ourInstance;
-    }
+//    private static ItemStatusUtil ourInstance;
+//
+//    public static ItemStatusUtil getInstance(Item item) {
+//        if (ourInstance == null)
+//            ourInstance = new ItemStatusUtil(item);
+//        return ourInstance;
+//    }
 
     String TableName;
     SQLiteDatabase DB;
@@ -31,7 +31,7 @@ public class ItemStatusUtil {
     String sortBy = "id desc";
     Item item;
 
-    private ItemStatusUtil(Item item) {
+    public ItemStatusUtil(Item item) {
         TableName = ApplicationUtil.getContext().getResources().getString(R.string.itemstatustable);
         DB= MyDbHelper.getDBInstance();
         this.item = item;

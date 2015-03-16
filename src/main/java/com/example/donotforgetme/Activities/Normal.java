@@ -1,5 +1,6 @@
 package com.example.donotforgetme.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -82,8 +83,28 @@ public class Normal extends Fragment {
             MyPagerAdapter myPagerAdapter=new MyPagerAdapter(views,titles);
             myPagerAdapter.setMyPageAdapterListener(new MyPageAdapterListener() {
                 @Override
-                public void Execute() {
-                    initControls();
+                public void Execute(int index) {
+                    switch (index)
+                    {
+                        case 0:
+                            initExecuteControls();
+                            break;
+                        case 1:
+
+                            break;
+
+                        case 2:
+
+                            break;
+                        case 3:
+
+                            break;
+                        case 4:
+
+                            break;
+
+                    }
+
                 }
             });
 
@@ -130,16 +151,17 @@ public class Normal extends Fragment {
 
     //以下代码是处理Normal_Executing
 
-    void initControls(){
+    void initExecuteControls(){
         listView=(ListView)getActivity().findViewById(R.id.normal_execute_listview);
         itemUtil=new ItemUtil();
         getExecuteDate();
     }
 
+    List<Item> itemList;
     void getExecuteDate()
     {
 
-        List<Item> itemList=itemUtil.getItems(StatusUtil.EXECUTE);
+        itemList=itemUtil.getItems(StatusUtil.EXECUTE);
         List<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
         if(!itemList.isEmpty())
         {
@@ -163,6 +185,10 @@ public class Normal extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            int itemId=itemList.get(position).getID();
+            Intent intent=new Intent(getActivity(),Add.class);
+            intent.putExtra("id",itemId);
+            startActivity(intent);
         }
     };
 

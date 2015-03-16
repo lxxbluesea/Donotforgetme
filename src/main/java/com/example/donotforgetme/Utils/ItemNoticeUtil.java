@@ -1,6 +1,5 @@
 package com.example.donotforgetme.Utils;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,13 +16,13 @@ import java.util.List;
  * Created by ZJGJK03 on 2015/3/9.
  */
 public class ItemNoticeUtil {
-    private static ItemNoticeUtil ourInstance = null;
-
-    public static ItemNoticeUtil getInstance(Item item) {
-        if (ourInstance == null)
-            ourInstance = new ItemNoticeUtil(item);
-        return ourInstance;
-    }
+//    private static ItemNoticeUtil ourInstance = null;
+//
+//    public static ItemNoticeUtil getInstance(Item item) {
+//        if (ourInstance == null)
+//            ourInstance = new ItemNoticeUtil(item);
+//        return ourInstance;
+//    }
 
     String TableName;
     SQLiteDatabase DB;
@@ -31,7 +30,7 @@ public class ItemNoticeUtil {
     String sortBy = "id asc";
     Item item;
 
-    private ItemNoticeUtil(Item item) {
+    public ItemNoticeUtil(Item item) {
         TableName = ApplicationUtil.getContext().getResources().getString(R.string.itemnoticetable);
         DB = MyDbHelper.getDBInstance();
         this.item = item;

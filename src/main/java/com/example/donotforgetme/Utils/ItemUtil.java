@@ -31,7 +31,7 @@ public class ItemUtil {
     String TableName= ApplicationUtil.getContext().getResources().getString(R.string.itemtable);;//,ItemStatusTableName,ItemNoticeTableName;
     SQLiteDatabase DB = MyDbHelper.getDBInstance();
     String[] columns = {"id", "content", "level", "createdatetime", "begindatetime", "enddatetime", "noticetime"};
-    String sortBy = "id asc";
+    String sortBy = "id desc";
     //获得可用ID
     int MaxID;
     ItemStatusUtil itemStatusUtil;
@@ -65,12 +65,11 @@ public class ItemUtil {
         item.setID(MaxID);
         item.setCreateDateTime(new Date().getTime());
         item.setBeginDateTime(new Date().getTime());
-        item.setEndDateTime(new Date().getTime()+DateUtil.Onehour);
+        item.setEndDateTime(new Date().getTime() + DateUtil.Onehour);
         //实例化两个对象
-        if(itemNoticeUtil==null)
-            itemNoticeUtil = ItemNoticeUtil.getInstance(item);
-        if(itemStatusUtil==null)
-            itemStatusUtil=ItemStatusUtil.getInstance(item);
+
+        itemNoticeUtil = new ItemNoticeUtil(item);
+        itemStatusUtil = new ItemStatusUtil(item);
         //生成3个默认的提醒和1个状态
         getNewItemNotices();
         //noticeList=new ArrayList<ItemNotice>();
@@ -79,12 +78,24 @@ public class ItemUtil {
 
     }
 
+    public ItemUtil(int id) {
+        item = getItemByID(id);
+    }
+
     /**
      * 返回Item的新对象
      *
      * @return
      */
     public Item getNewItem() {
+        return item;
+    }
+    /**
+     * 返回Item对象
+     *
+     * @return
+     */
+    public Item getItem() {
         return item;
     }
 
@@ -109,8 +120,8 @@ public class ItemUtil {
             item = null;
         else {
             item = itemList.get(0);
-            itemNoticeUtil=ItemNoticeUtil.getInstance(item);
-            itemStatusUtil=ItemStatusUtil.getInstance(item);
+            itemNoticeUtil=new ItemNoticeUtil(item);
+            itemStatusUtil=new ItemStatusUtil(item);
             noticeList=itemNoticeUtil.getAllNotice();
             status=itemStatusUtil.getCurrentStatus();
             statusList=itemStatusUtil.getAllStatus();
@@ -279,7 +290,7 @@ public class ItemUtil {
         try {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    Item item = getNewItem();
+                    Item item = new Item();
                     item.setID(cursor.getInt(0));
                     item.setContent(cursor.getString(1));
                     item.setLevel(cursor.getInt(2));

@@ -47,6 +47,7 @@
     <string name="add_et_error_text">提醒内容不能为空</string>
     <string name="add_btnenddate_error_text">结束日期必须大于开始日期</string>
     <string name="add_warncontrol_error_text">提醒日期必须在开始日期和结束日期中间</string>
+    <string name="add_item_null">对象不存在</string>
     <string name="additem_btn_addnotice_text">提醒</string>
     <string name="additem_btn_addnote_text">备忘录</string>
 

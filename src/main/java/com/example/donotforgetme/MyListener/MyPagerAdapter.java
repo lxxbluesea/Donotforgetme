@@ -53,9 +53,11 @@ public class MyPagerAdapter extends PagerAdapter {
         //Log.d("instantiateItem","instantiateItem:"+position);
         container.addView(views.get(position));
         if(myPageAdapterListener!=null)
-            myPageAdapterListener.Execute();
+            myPageAdapterListener.Execute(position);
         return views.get(position);
     }
+
+
 
     @Override
     public CharSequence getPageTitle(int position) {
