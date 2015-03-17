@@ -89,6 +89,12 @@ public class Normal extends Fragment {
 
             MyPagerAdapter myPagerAdapter = new MyPagerAdapter(views, titles);
             myPagerAdapter.setMyPageAdapterListener(new MyPageAdapterListener() {
+                //其它这些代码写在这里不太合适
+                //个人觉得可以写在ViewPager在页面切换时
+                //viewPager.setOnPageChangeListener();写在这里可能会更合适一些
+                //因为这里只使用一个数据容器来存放数据，所以每次切换都要重新加载
+                //也可以使用多个容器，这样每个页面都有自己的容器，就不用每次切换时都加载一次数据
+                //只有在数据变化时再更新，这样的话效率会更高一些，但相应的代码量会大一些，逻辑也会简单一些。
                 @Override
                 public void Execute(int index) {
                     //如果当前页面和正在加载的页面相同时，则执行加载数据
