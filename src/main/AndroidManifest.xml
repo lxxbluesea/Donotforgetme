@@ -60,6 +60,10 @@
             android:name="com.example.donotforgetme.Activities.AddItem"
             android:label="@string/title_activity_add_item" >
         </activity>
+        <activity
+            android:name="com.example.donotforgetme.Activities.Normal_Note"
+            android:label="@string/title_activity_normal_note" >
+        </activity>
     </application>
 
 </manifest>

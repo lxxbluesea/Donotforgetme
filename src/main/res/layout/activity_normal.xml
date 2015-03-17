@@ -61,6 +61,16 @@
                 android:focusableInTouchMode="true"
                 android:textColor="@color/textview_selector"
                 android:text="@string/title_activity_finish" />
+            <TextView
+                android:id="@+id/normal_note_tab_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColor="@color/textview_selector"
+                android:text="@string/title_activity_note" />
         </LinearLayout>
 
 
