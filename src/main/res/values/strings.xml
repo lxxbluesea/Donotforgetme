@@ -49,24 +49,15 @@
     <string name="add_btnenddate_error_text">结束日期必须大于开始日期</string>
     <string name="add_warncontrol_error_text">提醒日期必须在开始日期和结束日期中间</string>
     <string name="add_item_null">对象不存在</string>
-
-
     <string name="listview_head_text">正在更新数据...</string>
-
     <string name="additem_btn_addnotice_text">提醒</string>
     <string name="additem_btn_addnote_text">备忘录</string>
-
-
     <string name="importmenu_btn_import_sms">短信</string>
     <string name="importmenu_btn_import_contact">通讯录</string>
     <string name="importmenu_btn_import_calllist">通话记录</string>
-
-
     <string name="warncontrol_tv_warntype">提醒方式：</string>
     <string name="datetimeformat">yyyy-MM-dd HH:mm:ss</string>
     <string name="datetimeformat1">yyyy年MM月dd日 HH:mm</string>
-
-
     <string name="backuptypetable">backuptype</string>
     <string name="leveltable">level</string>
     <string name="itemtable">item</string>
@@ -75,8 +66,6 @@
     <string name="permissiontable">permission</string>
     <string name="statustable">Status</string>
     <string name="noticetable">notice</string>
-
-
     <string name="databaseName">warnMe</string>
     <string name="databaseVersion">1</string>
 
@@ -177,5 +166,9 @@
 
     <string name="title_activity_add_item">AddItem</string>
     <string name="title_activity_normal_note">Normal_Note</string>
+    <string name="title_activity_import__sms">Import_SMS</string>
+    <string name="title_activity_import__calllog">Import_Calllog</string>
+    <string name="title_activity_import__contact">Import_Contact</string>
+    <string name="title_activity_import__sms__thead_id">Import_SMS_TheadID</string>
 
 </resources>

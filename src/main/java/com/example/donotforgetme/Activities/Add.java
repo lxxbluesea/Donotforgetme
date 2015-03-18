@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.donotforgetme.Entities.Item;
 import com.example.donotforgetme.Entities.ItemNotice;
 import com.example.donotforgetme.MyListener.MyDateTimePickDialogListener;
+import com.example.donotforgetme.MyListener.MyPopWinListener;
 import com.example.donotforgetme.MyListener.MyWarnControl;
 import com.example.donotforgetme.R;
 import com.example.donotforgetme.MyListener.MyPopWin;
@@ -362,6 +363,7 @@ public class Add extends Activity {
     /**
      * 初始化导入按钮
      */
+    Button btn_sms,btn_contact,btn_calllog;
     void init_ImportBtn()
     {
         btn_import=(Button)this.findViewById(R.id.add_btn_import);
@@ -374,6 +376,40 @@ public class Add extends Activity {
 
         LayoutInflater inflater=this.getLayoutInflater();
         popWin=new MyPopWin(inflater,btn_import,R.layout.importmenu);
+        popWin.setPopWinListener(new MyPopWinListener() {
+            @Override
+            public void Execute(View view) {
+                btn_sms=(Button)view.findViewById(R.id.importmenu_btn_sms);
+                btn_contact=(Button)view.findViewById(R.id.importmenu_btn_contact);
+                btn_calllog=(Button)view.findViewById(R.id.importmenu_btn_calllist);
+                btn_sms.setOnClickListener(importListener);
+                btn_contact.setOnClickListener(importListener);
+                btn_calllog.setOnClickListener(importListener);
+            }
+        });
+
     }
+
+    View.OnClickListener importListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Intent myintent=null;
+            switch (v.getId())
+            {
+                case R.id.importmenu_btn_sms:
+                    myintent=new Intent(Add.this,Import_SMS.class);
+                    break;
+                case R.id.importmenu_btn_contact:
+
+                    break;
+                case R.id.importmenu_btn_calllist:
+
+                    break;
+            }
+            startActivity(myintent);
+
+        }
+    };
 
 }

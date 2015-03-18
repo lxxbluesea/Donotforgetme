@@ -58,18 +58,20 @@ public class SMSUtil {
 
     /**
      * 私有的构适函数
+     *
      * @param context
      */
     private SMSUtil(Context context) {
         this.context = context;
         //注册发送到接收广播
-        this.context.registerReceiver(sendSmS, new IntentFilter(SENT_SMS_ACTION));
+        //this.context.registerReceiver(sendSmS, new IntentFilter(SENT_SMS_ACTION));
         //this.context.registerReceiver(receiverSmS, new IntentFilter(DELIVERED_SMS_ACTION));
     }
 
 
     /**
      * 获得单例对象
+     *
      * @param context
      * @return
      */
@@ -88,6 +90,7 @@ public class SMSUtil {
      * date(接收时间),
      * type(类型，标志为发送或接收),
      * body(短信内容)
+     *
      * @return
      */
     public List<SMSInfo> getALLSMS() {
@@ -101,6 +104,60 @@ public class SMSUtil {
         contentResolver = context.getContentResolver();
         //定义游标，使用日期倒序显示
         Cursor cursor = contentResolver.query(uri, items, null, null, "date desc");
+        getSMS(cursor, smsInfos);
+
+        return smsInfos;
+    }
+
+    /**
+     * 获得全部的短信，包括有以下字段，
+     * thread_id（标志位）,
+     * address(来电的号码),
+     * person（联系中的名字，如果是陌生号码则为空）,
+     * date(接收时间),
+     * type(类型，标志为发送或接收),
+     * body(短信内容)
+     *
+     * @return
+     */
+    public List<SMSInfo> getALLSMSByThreadID() {
+        //定义SMSInfo集合
+        List<SMSInfo> smsInfos = new ArrayList<SMSInfo>();
+        //初始化短信的Uri，默认获取全部的短信
+        uri = Uri.parse(SMS_URI_ALL);
+        //定义需要返回的短信字段
+        String[] items = new String[]{"thread_id", "address", "person", "date", "type", "body"};
+        String where = "0==0) Group By(thread_id";
+        //初始化短信提供器
+        contentResolver = context.getContentResolver();
+        //定义游标，使用日期倒序显示
+        Cursor cursor = contentResolver.query(uri, items, where, null, "date desc");
+        getSMS(cursor, smsInfos);
+
+        return smsInfos;
+    }
+
+    /**
+     * 通过ThreadID来获取短信，同一个人的短信的ThreadID相同
+     * @param threadid
+     * @return
+     */
+    public List<SMSInfo> getSMSByThreadID(int threadid) {
+        //定义SMSInfo集合
+        List<SMSInfo> smsInfos = new ArrayList<SMSInfo>();
+        //初始化短信的Uri，默认获取全部的短信
+        uri = Uri.parse(SMS_URI_ALL);
+        //定义需要返回的短信字段
+        String[] items = new String[]{"thread_id", "address", "person", "date", "type", "body"};
+        //初始化短信提供器
+        contentResolver = context.getContentResolver();
+        //定义游标，使用日期倒序显示
+        Cursor cursor = contentResolver.query(uri, items, "thread_id=?", new String[]{threadid + ""}, "date desc");
+        getSMS(cursor, smsInfos);
+        return smsInfos;
+    }
+
+    void getSMS(Cursor cursor, List<SMSInfo> smsInfos) {
         try {
             //开始读取短信信息，并移动到第一条
             if (cursor != null && cursor.moveToFirst()) {
@@ -121,17 +178,16 @@ public class SMSUtil {
         } finally {
             cursor.close();//关闭游标
         }
-
-        return smsInfos;
     }
 
     /**
      * 发送短信
+     *
      * @param phoneNum 电话号码
-     * @param content 发送内容
+     * @param content  发送内容
      * @return
      */
-    public boolean sendSMS(String phoneNum, String content) throws IllegalArgumentException{
+    public boolean sendSMS(String phoneNum, String content) throws IllegalArgumentException {
 
         boolean flag = false;
         //判断是否为空
@@ -164,45 +220,45 @@ public class SMSUtil {
         return flag;
     }
 
-    /**
-     * 往数据库里写入短信内容
-     * @param phoneNum
-     * @param content
-     */
-    void writeSmS(String phoneNum, String content) {
-        ContentValues values = new ContentValues();
-        //时间
-        values.put("date", System.currentTimeMillis());
-        //未读
-        values.put("read", 0);
-        //接收
-        values.put("type", 1);
-        //来电号码
-        values.put("address", phoneNum);
-        //短信内容
-        values.put("body", content);
-        //插入短信到短信库
-        contentResolver.insert(uri,values);
-    }
+//    /**
+//     * 往数据库里写入短信内容
+//     * @param phoneNum
+//     * @param content
+//     */
+//    void writeSmS(String phoneNum, String content) {
+//        ContentValues values = new ContentValues();
+//        //时间
+//        values.put("date", System.currentTimeMillis());
+//        //未读
+//        values.put("read", 0);
+//        //接收
+//        values.put("type", 1);
+//        //来电号码
+//        values.put("address", phoneNum);
+//        //短信内容
+//        values.put("body", content);
+//        //插入短信到短信库
+//        contentResolver.insert(uri,values);
+//    }
 
-    BroadcastReceiver sendSmS = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            switch (getResultCode()) {
-                case Activity.RESULT_OK:
-                    Toast.makeText(ApplicationUtil.getContext(), "短信发送成功", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Toast.makeText(ApplicationUtil.getContext(), "短信发送失败", Toast.LENGTH_SHORT).show();
-            }
-        }
-    };
-
-    BroadcastReceiver receiverSmS = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(ApplicationUtil.getContext(), "对方接收成功", Toast.LENGTH_SHORT).show();
-        }
-    };
+//    BroadcastReceiver sendSmS = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            switch (getResultCode()) {
+//                case Activity.RESULT_OK:
+//                    Toast.makeText(ApplicationUtil.getContext(), "短信发送成功", Toast.LENGTH_SHORT).show();
+//                    break;
+//                default:
+//                    Toast.makeText(ApplicationUtil.getContext(), "短信发送失败", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//    };
+//
+//    BroadcastReceiver receiverSmS = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Toast.makeText(ApplicationUtil.getContext(), "对方接收成功", Toast.LENGTH_SHORT).show();
+//        }
+//    };
 
 }

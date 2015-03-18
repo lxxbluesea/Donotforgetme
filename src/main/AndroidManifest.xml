@@ -64,6 +64,22 @@
             android:name="com.example.donotforgetme.Activities.Normal_Note"
             android:label="@string/title_activity_normal_note" >
         </activity>
+        <activity
+            android:name="com.example.donotforgetme.Activities.Import_SMS"
+            android:label="@string/title_activity_import__sms" >
+        </activity>
+        <activity
+            android:name="com.example.donotforgetme.Activities.Import_Calllog"
+            android:label="@string/title_activity_import__calllog" >
+        </activity>
+        <activity
+            android:name="com.example.donotforgetme.Activities.Import_Contact"
+            android:label="@string/title_activity_import__contact" >
+        </activity>
+        <activity
+            android:name="com.example.donotforgetme.Activities.Import_SMS_TheadID"
+            android:label="@string/title_activity_import__sms__thead_id" >
+        </activity>
     </application>
 
 </manifest>

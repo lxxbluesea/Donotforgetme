@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.donotforgetme.Activities.Import_SMS_TheadID"
+    android:layout_margin="@dimen/normalmargin">
+
+    <ListView
+        android:id="@+id/import_sms_threadid_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/normalmargin"></ListView>
+
+</LinearLayout>

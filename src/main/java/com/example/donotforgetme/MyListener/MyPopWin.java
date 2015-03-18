@@ -15,8 +15,12 @@ public class MyPopWin {
     LayoutInflater layoutInflater;
     View view;
     int menuId;
-
+MyPopWinListener popWinListener;
     int offsetX,offsetY;
+
+    public void setPopWinListener(MyPopWinListener popWinListener) {
+        this.popWinListener = popWinListener;
+    }
 
     public MyPopWin(LayoutInflater layoutInflater, View view, int menuId) {
         this.layoutInflater = layoutInflater;
@@ -34,6 +38,8 @@ public class MyPopWin {
 
     public void showPopMenu() {
         View popwindow = layoutInflater.inflate(menuId, null);
+        if(popWinListener!=null)
+            popWinListener.Execute(popwindow);
         //btn_warn=(Button)popwindow.findViewById(R.id.selectormenu_btn_warn);
         //btn_warn=(Button)popwindow.findViewById(R.id.selectormenu_btn_note);
         //btn_warn.setOnClickListener(this);
