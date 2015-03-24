@@ -35,7 +35,7 @@ public class Import_SMS extends Activity {
         setContentView(R.layout.activity_import_sms);
         smsUtil = SMSUtil.getInstance(this);
         listView = (ListView) findViewById(R.id.import_lv_sms);
-        progressDialog = ProgressDialog.show(Import_SMS.this, "提示", "正在加载短信中...");
+        progressDialog = ProgressDialog.show(Import_SMS.this, "提示", "正在加载中...");
         new Thread(new Runnable() {
             @Override
             public void run() {

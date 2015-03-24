@@ -29,7 +29,10 @@ public class CallLog {
     }
 
     public String getName() {
-        return name;
+        if (TextUtils.isEmpty(name))
+            return ApplicationUtil.getContext().getResources().getString(R.string.import_calllog_empty_text);
+        else
+            return name;
     }
 
     public void setName(String name) {

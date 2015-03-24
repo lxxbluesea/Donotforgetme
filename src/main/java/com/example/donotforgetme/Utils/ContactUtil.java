@@ -125,9 +125,13 @@ public class ContactUtil {
     Bitmap getBitmapFromID(long phote_id, long contact_id) {
         Bitmap photo;
         if (phote_id > 0) {
+
             Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact_id);
             InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
             photo = BitmapFactory.decodeStream(input);
+            if (photo == null)
+                photo = BitmapFactory.decodeResource(ApplicationUtil.getContext().getResources(), R.drawable.pic);
+
         } else {
             photo = BitmapFactory.decodeResource(ApplicationUtil.getContext().getResources(), R.drawable.pic);
         }

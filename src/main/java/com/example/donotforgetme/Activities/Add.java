@@ -401,10 +401,10 @@ public class Add extends Activity {
                     myintent=new Intent(Add.this,Import_SMS.class);
                     break;
                 case R.id.importmenu_btn_contact:
-
+                    myintent=new Intent(Add.this,Import_Contact.class);
                     break;
                 case R.id.importmenu_btn_calllist:
-
+                    myintent=new Intent(Add.this,Import_Calllog.class);
                     break;
             }
             startActivity(myintent);

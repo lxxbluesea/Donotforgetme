@@ -52,9 +52,13 @@
     <string name="listview_head_text">正在更新数据...</string>
     <string name="additem_btn_addnotice_text">提醒</string>
     <string name="additem_btn_addnote_text">备忘录</string>
+
+
     <string name="importmenu_btn_import_sms">短信</string>
     <string name="importmenu_btn_import_contact">通讯录</string>
     <string name="importmenu_btn_import_calllist">通话记录</string>
+    <string name="import_calllog_empty_text">未知号码</string>
+
     <string name="warncontrol_tv_warntype">提醒方式：</string>
     <string name="datetimeformat">yyyy-MM-dd HH:mm:ss</string>
     <string name="datetimeformat1">yyyy年MM月dd日 HH:mm</string>
