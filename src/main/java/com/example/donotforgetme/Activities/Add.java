@@ -45,6 +45,9 @@ public class Add extends Activity {
     Intent intent;
 
     int itemID=-1;
+
+    final int REQUESTCODE=100,SMSRESULTCODE=101,CALLLOGRESULTCODE=102,CONTACTRESULTCODE=103;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -373,7 +376,6 @@ public class Add extends Activity {
                 popWin.showPopMenu();
             }
         });
-
         LayoutInflater inflater=this.getLayoutInflater();
         popWin=new MyPopWin(inflater,btn_import,R.layout.importmenu);
         popWin.setPopWinListener(new MyPopWinListener() {
@@ -407,9 +409,30 @@ public class Add extends Activity {
                     myintent=new Intent(Add.this,Import_Calllog.class);
                     break;
             }
-            startActivity(myintent);
+
+
+            startActivityForResult(myintent,REQUESTCODE);
 
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(REQUESTCODE==requestCode)//验证请求码
+        {
+            switch (resultCode)//验证结果码
+            {
+                case SMSRESULTCODE://短信的结果码
+                case CALLLOGRESULTCODE://通讯记录的结果码
+                case CONTACTRESULTCODE://通讯录的结果码
+                    popWin.closePopMenu();//关闭菜单
+                    String result = et_content.getText().toString();//保留原有的数据
+                    result += data.getExtras().getString("import");//设置新的数据
+                    et_content.setText(result);
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

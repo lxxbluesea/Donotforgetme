@@ -44,6 +44,9 @@ public class SMSUtil {
     /**
      * 发送和接收的广播
      */
+
+    public static final int SMSRESULTCODE=101;
+
     //String SENT_SMS_ACTION = "SENT_SMS_ACTION";
     String SENT_SMS_ACTION = "SMS_SENT_ACTION";
     String DELIVERED_SMS_ACTION = "DELIVERED_SMS_ACTION";

@@ -53,6 +53,11 @@
     <string name="additem_btn_addnotice_text">提醒</string>
     <string name="additem_btn_addnote_text">备忘录</string>
 
+    <string name="import_normal_warn">提示</string>
+    <string name="import_normal_warntext">正在加载中...</string>
+
+    <string name="normal_confirm">确定</string>
+    <string name="normal_cancel">取消</string>
 
     <string name="importmenu_btn_import_sms">短信</string>
     <string name="importmenu_btn_import_contact">通讯录</string>

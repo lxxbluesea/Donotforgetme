@@ -28,6 +28,8 @@ public class CallLogUtil {
     };
     static int DATE = 0, NUMBER = 1, TYPE = 2, CACHED_NAME = 3, _ID = 4;
 
+    public static final int CALLLOGRESULTCODE=102;
+
     private CallLogUtil() {
         resolver = ApplicationUtil.getContext().getContentResolver();
     }

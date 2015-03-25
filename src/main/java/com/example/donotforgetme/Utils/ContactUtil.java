@@ -62,6 +62,7 @@ public class ContactUtil {
         contentResolver = ApplicationUtil.getContext().getContentResolver();
     }
 
+    public static final int CONTACTRESULTCODE=103;
     /**
      * 获得实例
      *
@@ -147,6 +148,40 @@ public class ContactUtil {
      */
     public List<Contact> getAllContact_FromSIM() {
         List<Contact> contactList = new ArrayList<Contact>();
+        Cursor cursor = contentResolver.query(SIM_CONTACT, PHONES_PROJECTION, null, null, "sort_key COLLATE LOCALIZED asc");
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    String tmpnum = cursor.getString(PHONES_NUMBER_INDEX);
+                    if (TextUtils.isEmpty(tmpnum))
+                        continue;
+                    Contact contact = new Contact();
+                    contact.setDisplayName(cursor.getString(PHONES_DISPLAY_NAME_INDEX));
+                    contact.setNumber(tmpnum);
+                    contact.setContactID(cursor.getLong(PHONES_CONTACT_ID_INDEX));
+
+                    contactList.add(contact);
+                }
+                while (cursor.moveToNext());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            cursor.close();
+        }
+
+        return contactList;
+    }
+
+    /**
+     * 从SIM卡里获取联系人信息，
+     * SIM卡里的联系人只有手机号码和姓名
+     *
+     * @return
+     */
+    public List<Contact> getAllContact_FromSIM(List<Contact> contactList) {
+        //List<Contact> contactList = new ArrayList<Contact>();
         Cursor cursor = contentResolver.query(SIM_CONTACT, PHONES_PROJECTION, null, null, "sort_key COLLATE LOCALIZED asc");
         try {
             if (cursor != null && cursor.moveToFirst()) {

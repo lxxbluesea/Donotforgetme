@@ -15,9 +15,9 @@ public class MyPopWin {
     LayoutInflater layoutInflater;
     View view;
     int menuId;
-MyPopWinListener popWinListener;
-    int offsetX,offsetY;
-
+    MyPopWinListener popWinListener;
+    int offsetX, offsetY;
+    PopupWindow popupWindow;
     public void setPopWinListener(MyPopWinListener popWinListener) {
         this.popWinListener = popWinListener;
     }
@@ -38,17 +38,23 @@ MyPopWinListener popWinListener;
 
     public void showPopMenu() {
         View popwindow = layoutInflater.inflate(menuId, null);
-        if(popWinListener!=null)
+        if (popWinListener != null)
             popWinListener.Execute(popwindow);
         //btn_warn=(Button)popwindow.findViewById(R.id.selectormenu_btn_warn);
         //btn_warn=(Button)popwindow.findViewById(R.id.selectormenu_btn_note);
         //btn_warn.setOnClickListener(this);
         //btn_note.setOnClickListener(this);
 
-        final PopupWindow popupWindow = new PopupWindow(popwindow, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(popwindow, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
         popupWindow.showAsDropDown(view, offsetX, offsetY);
+
+    }
+    public void closePopMenu()
+    {
+        if(popupWindow!=null)
+            popupWindow.dismiss();
     }
 }
