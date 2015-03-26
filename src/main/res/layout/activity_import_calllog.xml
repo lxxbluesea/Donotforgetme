@@ -3,6 +3,10 @@
     android:layout_height="match_parent"  android:orientation="vertical"
     tools:context="com.example.donotforgetme.Activities.Import_Calllog">
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/titlebar" />
     <ListView android:id="@+id/import_lv_calllog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>

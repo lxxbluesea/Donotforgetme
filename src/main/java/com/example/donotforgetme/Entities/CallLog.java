@@ -30,7 +30,8 @@ public class CallLog {
 
     public String getName() {
         if (TextUtils.isEmpty(name))
-            return ApplicationUtil.getContext().getResources().getString(R.string.import_calllog_empty_text);
+            return number;
+            //return ApplicationUtil.getContext().getResources().getString(R.string.import_calllog_empty_text);
         else
             return name;
     }
