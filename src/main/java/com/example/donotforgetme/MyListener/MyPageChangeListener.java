@@ -28,6 +28,35 @@ public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
     List<TextView> textViewList;
     int viewCount;
 
+    MyPageChangerUpdateDataListener pageChangerUpdateDataListener;
+
+    public void setPageChangerUpdateDataListener(MyPageChangerUpdateDataListener pageChangerUpdateDataListener) {
+        this.pageChangerUpdateDataListener = pageChangerUpdateDataListener;
+    }
+
+    /**
+     *
+     * @param imageView
+     * @param dm
+     */
+    public MyPageChangeListener(List<TextView> textViewList,ImageView imageView,DisplayMetrics dm,int viewCount,MyPageChangerUpdateDataListener listener) {
+        this.textViewList = textViewList;
+        this.imageView = imageView;
+        this.dm = dm;
+        this.viewCount=viewCount;
+        this.pageChangerUpdateDataListener=listener;
+
+        this.bmpW = BitmapFactory.decodeResource(ApplicationUtil.getContext().getResources(), R.drawable.cursor).getWidth();
+        int screenW = dm.widthPixels;
+        offset = (screenW / viewCount - bmpW) / 2;
+        oldx = offset;
+
+        Matrix matrix = new Matrix();
+        matrix.postTranslate(offset, 0);
+        imageView.setImageMatrix(matrix);
+        aveWidth = offset * 2 + bmpW;
+    }
+
     /**
      *
      * @param imageView
@@ -70,6 +99,9 @@ public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
         oldindex = i;
 
         textViewList.get(i).requestFocus();
+
+        if(pageChangerUpdateDataListener!=null)
+            pageChangerUpdateDataListener.execute(i);
 
     }
 

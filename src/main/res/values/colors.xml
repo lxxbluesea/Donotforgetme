@@ -3,4 +3,5 @@
     <color name="select_textColor">#FFF7931E</color>
     <color name="noselect_textColor">#FF000000</color>
     <color name="menu_textColor">#FFFFFFFF</color>
+    <color name="touming">#00000000</color>
 </resources>

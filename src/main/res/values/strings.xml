@@ -13,9 +13,11 @@
     <string name="title_activity_search">查询</string>
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_executing">执行中</string>
-    <string name="title_activity_delay">滞后</string>
-    <string name="title_activity_delete">删除</string>
+    <string name="title_activity_detail">详细信息</string>
+    <string name="title_activity_delay">延后</string>
+    <string name="title_activity_delete">回收站</string>
     <string name="title_activity_finish">完成</string>
+    <string name="title_activity_back">还原</string>
     <string name="title_activity_note">备忘录</string>
     <string name="title_activity_setting_normal">基本设置</string>
     <string name="title_activity_setting_warn">提醒</string>

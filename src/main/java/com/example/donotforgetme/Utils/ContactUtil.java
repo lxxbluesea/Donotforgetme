@@ -241,8 +241,10 @@ public class ContactUtil {
      */
     public List<Contact> getContactByNumber(String number) {
         List<Contact> contactList = new ArrayList<Contact>();
-        Cursor cursor = contentResolver.query(PHONE_CONTACT, PHONES_PROJECTION, "data1=?", new String[]{number}, null);
-        getContacts(cursor, contactList);
+        if (!TextUtils.isEmpty(number)) {
+            Cursor cursor = contentResolver.query(PHONE_CONTACT, PHONES_PROJECTION, "data1=?", new String[]{number}, null);
+            getContacts(cursor, contactList);
+        }
         return contactList;
     }
 
