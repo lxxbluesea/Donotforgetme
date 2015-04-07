@@ -12,7 +12,7 @@ public class Normal_Delay extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_normal_delay);
+        setContentView(R.layout.activity_normal_nobegin);
     }
 
 

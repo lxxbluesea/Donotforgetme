@@ -152,7 +152,7 @@ public class MyWarnControl extends LinearLayout {
             items.add(notice.getName());
         }
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_dropdown_item,items);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this.getContext(),android.R.layout.simple_spinner_item,items);
         sp_warnType.setAdapter(adapter);
 
     }

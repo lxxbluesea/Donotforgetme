@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.donotforgetme.MyListener.MyListViewAdapter;
 import com.example.donotforgetme.R;
 
 public class AddItem extends Fragment {
@@ -45,16 +47,20 @@ public class AddItem extends Fragment {
             {
                 case R.id.additem_btn_addnotice:
                     intent=new Intent(getActivity(),Add.class);
+                    startActivityForResult(intent, MyListViewAdapter.AddNotice);
                     break;
                 case R.id.additem_btn_addnote:
 
                     break;
             }
 
-            if(intent!=null)
-            {
-                startActivity(intent);
-            }
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d("AddItem","onActivityResult,requestCode is:"+requestCode+",resultCode is :"+resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

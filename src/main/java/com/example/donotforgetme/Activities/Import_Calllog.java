@@ -95,12 +95,12 @@ public class Import_Calllog extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             CallLog callLog = callLogList.get(position);
-            final String result = "通话记录[姓名：" + callLog.getName() + "，手机号码：" + callLog.getNumber()+",日期："+callLog.getDate()+"]";
+            final String result = "来自：通话记录，\n姓名：" + callLog.getName() + "，\n手机号码：" + callLog.getNumber()+",\n日期："+callLog.getDate()+"\n";
             AlertDialog.Builder dialog=new AlertDialog.Builder(Import_Calllog.this);
             dialog.setIcon(R.drawable.ic_launcher);
-            dialog.setTitle(getResources().getString(R.string.import_normal_warn));
+            dialog.setTitle(R.string.import_normal_warn);
             dialog.setMessage("是否导入?" + result);
-            dialog.setPositiveButton(getResources().getString(R.string.normal_confirm), new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton(R.string.normal_confirm, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent();
@@ -109,7 +109,7 @@ public class Import_Calllog extends Activity {
                     finish();
                 }
             });
-            dialog.setNegativeButton(getResources().getString(R.string.normal_cancel),new DialogInterface.OnClickListener() {
+            dialog.setNegativeButton(R.string.normal_cancel,new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

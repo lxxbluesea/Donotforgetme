@@ -69,6 +69,7 @@ public class ItemNoticeUtil {
     {
         ItemNotice notice=new ItemNotice();
         notice.setItemID(item.getID());
+        notice.setType(NoticeUtil.VOICE);
         notice.setNoticeID(NoticeUtil.getInstance().getNoticeByID(type).getID());
         return notice;
     }

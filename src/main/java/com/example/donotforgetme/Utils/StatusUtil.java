@@ -20,7 +20,7 @@ public class StatusUtil {
     String[] columns={"id","name"};
     String sortBy="id asc";
 
-    public final static int EXECUTE=1,FINISH=2,RELAY=3,DELETE=4,NOTE=5;
+    public final static int EXECUTE=0,FINISH=1,NOBEGIN=2,DELETE=3,NOTE=4;
 
     private StatusUtil()
     {

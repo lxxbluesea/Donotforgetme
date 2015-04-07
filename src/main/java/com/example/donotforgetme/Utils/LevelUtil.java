@@ -24,7 +24,7 @@ public class LevelUtil {
     SQLiteDatabase DB;
     String[] columns = {"id", "name"};
     String sortBy = "id asc";
-    public static final int LOW=1,AVERAGER=2,HIGH=3;
+    public static final int LOW=0,AVERAGER=1,HIGH=2;
     private LevelUtil() {
         TableName = ApplicationUtil.getContext().getResources().getString(R.string.leveltable);
         DB = MyDbHelper.getDBInstance();

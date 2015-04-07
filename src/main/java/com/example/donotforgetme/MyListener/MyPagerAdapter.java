@@ -13,10 +13,11 @@ public class MyPagerAdapter extends PagerAdapter {
 
     List<View> views;
     List<String> titles;
+    int childCount=0;
 
-    MyPageAdapterListener myPageAdapterListener;
+    MyPageAdapterInstanceListener myPageAdapterListener;
 
-    public void setMyPageAdapterListener(MyPageAdapterListener myPageAdapterListener) {
+    public void setMyPageAdapterListener(MyPageAdapterInstanceListener myPageAdapterListener) {
         this.myPageAdapterListener = myPageAdapterListener;
     }
 
@@ -28,11 +29,12 @@ public class MyPagerAdapter extends PagerAdapter {
     public MyPagerAdapter(List<View> views, List<String> titles) {
         this.views = views;
         this.titles = titles;
+        childCount=views.size();
     }
 
     @Override
     public int getCount() {
-        return views.size();
+        return childCount;
     }
 
     @Override
@@ -44,6 +46,8 @@ public class MyPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         //super.destroyItem(container, position, object);
         //Log.d("instantiateItem","destroyItem:"+position);
+        if(myPageAdapterListener!=null)
+            myPageAdapterListener.Destory(views.get(position),position);
         container.removeView(views.get(position));
     }
 
@@ -52,15 +56,18 @@ public class MyPagerAdapter extends PagerAdapter {
         //return super.instantiateItem(container, position);
         //Log.d("instantiateItem","instantiateItem:"+position);
         container.addView(views.get(position));
-        if(myPageAdapterListener!=null)
-            myPageAdapterListener.Execute(position);
+        if (myPageAdapterListener != null)
+            myPageAdapterListener.Instance(views.get(position), position);
         return views.get(position);
     }
-
-
 
     @Override
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }

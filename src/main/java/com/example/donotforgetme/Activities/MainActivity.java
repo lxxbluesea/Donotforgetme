@@ -1,8 +1,10 @@
 package com.example.donotforgetme.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,5 +99,11 @@ public class MainActivity extends FragmentActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("MainActivity","onActivityResult,requestCode is:"+requestCode+",resultCode is :"+resultCode);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

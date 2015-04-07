@@ -34,7 +34,7 @@
             android:label="@string/title_activity_executing" />
         <activity
             android:name="com.example.donotforgetme.Activities.Normal_Delay"
-            android:label="@string/title_activity_delay" />
+            android:label="@string/title_activity_nobegin" />
         <activity
             android:name="com.example.donotforgetme.Activities.Normal_Delete"
             android:label="@string/title_activity_delete" />

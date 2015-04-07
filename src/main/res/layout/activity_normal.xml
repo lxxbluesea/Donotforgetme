@@ -30,7 +30,7 @@
                 android:text="@string/title_activity_executing" />
 
             <TextView
-                android:id="@+id/normal_delay_tab_title"
+                android:id="@+id/normal_finish_tab_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -38,7 +38,17 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:textColor="@color/textview_selector"
-                android:text="@string/title_activity_delay" />
+                android:text="@string/title_activity_finish" />
+            <TextView
+                android:id="@+id/normal_nobegin_tab_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColor="@color/textview_selector"
+                android:text="@string/title_activity_nobegin" />
 
             <TextView
                 android:id="@+id/normal_delete_tab_title"
@@ -51,16 +61,7 @@
                 android:textColor="@color/textview_selector"
                 android:text="@string/title_activity_delete" />
 
-            <TextView
-                android:id="@+id/normal_finish_tab_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textColor="@color/textview_selector"
-                android:text="@string/title_activity_finish" />
+
             <TextView
                 android:id="@+id/normal_note_tab_title"
                 android:layout_width="wrap_content"

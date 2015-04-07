@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.donotforgetme.Entities.Item;
 import com.example.donotforgetme.Entities.ItemNotice;
 import com.example.donotforgetme.MyListener.MyDateTimePickDialogListener;
+import com.example.donotforgetme.MyListener.MyListViewAdapter;
 import com.example.donotforgetme.MyListener.MyPopWinListener;
 import com.example.donotforgetme.MyListener.MyWarnControl;
 import com.example.donotforgetme.R;
@@ -205,6 +206,7 @@ public class Add extends Activity {
 
             if(result)
             {
+                setResult(MyListViewAdapter.AddNoticeResult);
                 finish();
                 //保存成功后，需要把主框架设置到
                 //RemoveItem();

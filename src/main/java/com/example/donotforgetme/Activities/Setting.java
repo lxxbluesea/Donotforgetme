@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.donotforgetme.MyListener.MyClickTouchListener;
-import com.example.donotforgetme.MyListener.MyPageChangeListener;
+import com.example.donotforgetme.MyListener.MyPageChanged;
 import com.example.donotforgetme.MyListener.MyPagerAdapter;
 import com.example.donotforgetme.R;
 
@@ -60,7 +60,7 @@ public class Setting extends Fragment {
 
             viewPager.setAdapter(new MyPagerAdapter(views,titles));
             viewPager.setCurrentItem(0);
-            viewPager.setOnPageChangeListener(new MyPageChangeListener(initTextView(),cursor,getDisplayMetrice(),3));
+            viewPager.setOnPageChangeListener(new MyPageChanged(getActivity(),initTextView(),cursor));
 
 
         }

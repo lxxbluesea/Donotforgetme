@@ -2,8 +2,6 @@ package com.example.donotforgetme.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,7 +16,6 @@ import com.example.donotforgetme.Utils.StatusUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class Normal_Executing extends Activity {
 
@@ -40,24 +37,24 @@ public class Normal_Executing extends Activity {
     void getExecuteDate()
     {
 
-        List<Item> itemList=itemUtil.getItems(StatusUtil.EXECUTE);
-        List<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
-        if(!itemList.isEmpty())
-        {
-            for(Item item:itemList)
-            {
-                HashMap<String,Object> d=new HashMap<String, Object>();
-                d.put("content",item.getContent());
-                d.put("begindatetime", DateUtil.getDateString(item.getBeginDateTime()));
-                d.put("enddatetime",DateUtil.getDateString(item.getEndDateTime()));
-                datas.add(d);
-            }
-        }
-
-        SimpleAdapter simpleAdapter=new SimpleAdapter(this,datas,R.layout.listview_item,new String[]{"content","begindatetime","enddatetime"},new int[]{R.id.listview_item_lv_title,R.id.listview_item_1,R.id.listview_item_2});
-        listView.setAdapter(simpleAdapter);
-        listView.setOnItemClickListener(clickListener);
-        listView.setOnItemLongClickListener(longClickListener);
+//        List<Item> itemList=itemUtil.getItems(StatusUtil.EXECUTE);
+//        List<HashMap<String,Object>> datas=new ArrayList<HashMap<String, Object>>();
+//        if(!itemList.isEmpty())
+//        {
+//            for(Item item:itemList)
+//            {
+//                HashMap<String,Object> d=new HashMap<String, Object>();
+//                d.put("content",item.getContent());
+//                d.put("begindatetime", DateUtil.getDateString(item.getBeginDateTime()));
+//                d.put("enddatetime",DateUtil.getDateString(item.getEndDateTime()));
+//                datas.add(d);
+//            }
+//        }
+//
+//        SimpleAdapter simpleAdapter=new SimpleAdapter(this,datas,R.layout.listview_item_execute,new String[]{"content","begindatetime","enddatetime"},new int[]{R.id.listview_item_lv_title,R.id.listview_item_1,R.id.listview_item_2});
+//        listView.setAdapter(simpleAdapter);
+//        listView.setOnItemClickListener(clickListener);
+//        listView.setOnItemLongClickListener(longClickListener);
     }
 
     AdapterView.OnItemClickListener clickListener=new AdapterView.OnItemClickListener() {

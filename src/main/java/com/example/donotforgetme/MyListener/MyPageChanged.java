@@ -1,5 +1,6 @@
 package com.example.donotforgetme.MyListener;
 
+import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.support.v4.view.ViewPager;
@@ -17,35 +18,33 @@ import java.util.List;
 /**
  * Created by ZJGJK03 on 2015/2/22.
  */
-public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
+public class MyPageChanged extends ViewPager.SimpleOnPageChangeListener {
 
     ImageView imageView;
-    DisplayMetrics dm;
+    DisplayMetrics dm=new DisplayMetrics();
     int oldindex=0;
     int bmpW=0,offset=0;
     int aveWidth=0;
     int oldx,newx;
     List<TextView> textViewList;
     int viewCount;
+    Activity activity;
 
-    MyPageChangerUpdateDataListener pageChangerUpdateDataListener;
+    MyPageChangedListener pageChangerUpdateDataListener;
 
-    public void setPageChangerUpdateDataListener(MyPageChangerUpdateDataListener pageChangerUpdateDataListener) {
+    public void setPageChangerUpdateDataListener(MyPageChangedListener pageChangerUpdateDataListener) {
         this.pageChangerUpdateDataListener = pageChangerUpdateDataListener;
     }
 
-    /**
-     *
-     * @param imageView
-     * @param dm
-     */
-    public MyPageChangeListener(List<TextView> textViewList,ImageView imageView,DisplayMetrics dm,int viewCount,MyPageChangerUpdateDataListener listener) {
+    public MyPageChanged(Activity activity, List<TextView> textViewList, ImageView imageView, MyPageChangedListener listener) {
+        this.activity=activity;
         this.textViewList = textViewList;
         this.imageView = imageView;
-        this.dm = dm;
-        this.viewCount=viewCount;
+        this.viewCount=this.textViewList.size();
         this.pageChangerUpdateDataListener=listener;
 
+
+        activity.getWindowManager().getDefaultDisplay().getMetrics(this.dm);
         this.bmpW = BitmapFactory.decodeResource(ApplicationUtil.getContext().getResources(), R.drawable.cursor).getWidth();
         int screenW = dm.widthPixels;
         offset = (screenW / viewCount - bmpW) / 2;
@@ -57,17 +56,13 @@ public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
         aveWidth = offset * 2 + bmpW;
     }
 
-    /**
-     *
-     * @param imageView
-     * @param dm
-     */
-    public MyPageChangeListener(List<TextView> textViewList,ImageView imageView,DisplayMetrics dm,int viewCount) {
+    public MyPageChanged(Activity activity, List<TextView> textViewList, ImageView imageView) {
         this.textViewList = textViewList;
         this.imageView = imageView;
-        this.dm = dm;
-        this.viewCount=viewCount;
+        this.activity=activity;
+        this.viewCount=textViewList.size();
 
+        activity.getWindowManager().getDefaultDisplay().getMetrics(this.dm);
         this.bmpW = BitmapFactory.decodeResource(ApplicationUtil.getContext().getResources(), R.drawable.cursor).getWidth();
         int screenW = dm.widthPixels;
         offset = (screenW / viewCount - bmpW) / 2;
@@ -80,15 +75,19 @@ public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
     }
 
     @Override
-    public void onPageScrolled(int i, float v, int i2) {
-
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
     }
 
     @Override
-    public void onPageSelected(int i) {
-        Animation animation;
-        int tmp = i - oldindex;
+    public void onPageScrollStateChanged(int state) {
+        super.onPageScrollStateChanged(state);
+    }
 
+    @Override
+    public void onPageSelected(int position) {
+        Animation animation;
+        int tmp = position - oldindex;
         oldx=newx;
         newx=oldx+tmp*aveWidth;
 
@@ -96,17 +95,27 @@ public class MyPageChangeListener implements ViewPager.OnPageChangeListener {
         animation.setFillAfter(true);
         animation.setDuration(300);
         imageView.startAnimation(animation);
-        oldindex = i;
+        oldindex = position;
 
-        textViewList.get(i).requestFocus();
+        textViewList.get(position).requestFocus();
 
         if(pageChangerUpdateDataListener!=null)
-            pageChangerUpdateDataListener.execute(i);
-
+            pageChangerUpdateDataListener.Changed(position);
+        super.onPageSelected(position);
     }
 
-    @Override
-    public void onPageScrollStateChanged(int i) {
 
+
+
+    /**
+     * 获得屏幕的信息，其中包括有长和宽
+     *
+     * @return
+     */
+    DisplayMetrics getDisplayMetrice() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
+
 }

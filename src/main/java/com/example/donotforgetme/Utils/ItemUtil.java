@@ -315,12 +315,12 @@ public class ItemUtil {
      * 获得指定类型的Item
      *
      * @param type 定义在StatusUtil中
-     *             EXECUTE=1,FINISH=2,RELAY=3,DELETE=4,NOTE=5
+     *             EXECUTE=0,FINISH=1,RELAY=2,DELETE=3,NOTE=4
      * @return
      */
     public List<Item> getItems(int type) {
         List<Item> itemList = new ArrayList<Item>();
-        Cursor cursor = DB.query(TableName, columns, " id in (select itemid from itemstatus where statusid=? group by itemid)", new String[]{type + ""}, null, null, sortBy);
+        Cursor cursor = DB.query(TableName, columns, " id in (select itemid from itemcurrentstatus where statusid=?)", new String[]{type + ""}, null, null, sortBy);
         getItem(cursor, itemList);
         return itemList;
     }
@@ -376,6 +376,7 @@ public class ItemUtil {
 
             result = DB.insert(TableName, null, values);
             if (result > 0) {
+                CheckItemStatus();
                 flag = itemNoticeUtil.AddItemNotices(noticeList);
                 flag = itemStatusUtil.AddItemStatus(status);
             }
@@ -420,6 +421,7 @@ public class ItemUtil {
                 result=DB.insert(TableName, null, values);
                 if(result>0)
                 {
+                    CheckItemStatus();
                     flag=itemNoticeUtil.AddItemNotices(noticeList);
                     flag=itemStatusUtil.AddItemStatus(status);
                 }
@@ -508,7 +510,7 @@ public class ItemUtil {
      * 更新Item的状态，这里需要指定类型
      * 例如：执行中到结束或者到滞后
      * type定义在StatusUtil中
-     * EXECUTE=1,FINISH=2,RELAY=3,DELETE=4,NOTE=5
+     * EXECUTE=0,FINISH=1,NOBEGIN=2,DELETE=3,NOTE=4
      * @param type
      * @return
      */
@@ -519,6 +521,23 @@ public class ItemUtil {
         status=itemStatusUtil.getItemStatus(type);
         flag=itemStatusUtil.AddItemStatus(status);
         return flag;
+    }
+
+    public void CheckItemStatus()
+    {
+        if(status.getStatusID()==StatusUtil.EXECUTE || status.getStatusID()==StatusUtil.NOBEGIN) {
+            if (item.getBeginDateTime() > DateUtil.getNow()) {
+                status.setStatusID(StatusUtil.NOBEGIN);
+            }
+        }
+    }
+    public void CheckItemStatus(ItemStatus status)
+    {
+        if(status.getStatusID()==StatusUtil.EXECUTE || status.getStatusID()==StatusUtil.NOBEGIN) {
+            if (item.getBeginDateTime() > DateUtil.getNow()) {
+                status.setStatusID(StatusUtil.NOBEGIN);
+            }
+        }
     }
 
     /**

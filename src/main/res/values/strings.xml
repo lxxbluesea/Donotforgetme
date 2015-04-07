@@ -13,11 +13,19 @@
     <string name="title_activity_search">查询</string>
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_executing">执行中</string>
-    <string name="title_activity_detail">详细信息</string>
-    <string name="title_activity_delay">延后</string>
     <string name="title_activity_delete">回收站</string>
     <string name="title_activity_finish">完成</string>
-    <string name="title_activity_back">还原</string>
+    <string name="title_activity_nobegin">未开始</string>
+
+
+    <string name="listview_item_btn_nowbegin">马上开始</string>
+    <string name="listview_item_btn_back">还原</string>
+    <string name="listview_item_btn_delay">延后</string>
+    <string name="listview_item_btn_detail">提醒时间</string>
+    <string name="listview_item_btn_delete">回收站</string>
+    <string name="listview_item_btn_finish">完成</string>
+    <string name="listview_item_lv_timeoffset">执行时间段：</string>
+
     <string name="title_activity_note">备忘录</string>
     <string name="title_activity_setting_normal">基本设置</string>
     <string name="title_activity_setting_warn">提醒</string>
@@ -27,9 +35,9 @@
     <string name="return_text">返回</string>
     <string name="save_text">保存</string>
     <string name="add_tv_content">内容：</string>
-    <string name="add_btn_import">导入...</string>
+    <string name="add_btn_import">导入</string>
     <string name="add_tv_createdate">创建时间：</string>
-    <string name="add_tv_quickadd">快速添加：</string>
+    <string name="add_tv_quickadd">设置：</string>
     <string name="add_rb_halfhour">半小时</string>
     <string name="add_rb_onehour">1小时</string>
     <string name="add_rb_twohours">2小时</string>
@@ -37,8 +45,8 @@
     <string name="add_rb_oneday">1天后</string>
     <string name="add_rb_twodays">2天后</string>
     <string name="add_rb_threedays">3天后</string>
-    <string name="add_tv_startdate">开始时间：</string>
-    <string name="add_tv_enddate">结束时间：</string>
+    <string name="add_tv_startdate">开始：</string>
+    <string name="add_tv_enddate">结束：</string>
     <string name="add_tv_warntime">提醒次数：</string>
     <string name="add_btn_selectdatetime">日期...</string>
     <string name="add_btn_add_text">+</string>
@@ -51,7 +59,19 @@
     <string name="add_btnenddate_error_text">结束日期必须大于开始日期</string>
     <string name="add_warncontrol_error_text">提醒日期必须在开始日期和结束日期中间</string>
     <string name="add_item_null">对象不存在</string>
+    <string name="listview_item_finish_title_text">请输入完成情况：</string>
+    <string name="listview_item_finish_content_error">内容不能为空</string>
     <string name="listview_head_text">正在更新数据...</string>
+    <string name="listview_item_delete_message">是否真的放入回收站？</string>
+    <string name="listview_item_delete_title_text">请输入删除原因：</string>
+    <string name="listview_item_back_note">从回收站里还原</string>
+    <string name="listview_item_back_title">是否真的还原？</string>
+    <string name="listview_item_delay_title">请选择延后的时长：</string>
+    <string name="listview_item_save_error_message">更新失败</string>
+    <string name="listview_item_status_save_error_message">更新失败</string>
+    <string name="listview_item_finish_lv_title_text">提醒详细信息</string>
+    <string name="listview_item_item_warntimes">提醒时间如下</string>
+
     <string name="additem_btn_addnotice_text">提醒</string>
     <string name="additem_btn_addnote_text">备忘录</string>
 
@@ -61,6 +81,7 @@
     <string name="import_calllog_text">导入通话记录</string>
     <string name="import_contact_text">导入通讯录</string>
 
+    <string name="normal_title">提示</string>
     <string name="normal_confirm">确定</string>
     <string name="normal_cancel">取消</string>
 
@@ -68,6 +89,12 @@
     <string name="importmenu_btn_import_contact">通讯录</string>
     <string name="importmenu_btn_import_calllist">通话记录</string>
     <string name="import_calllog_empty_text">未知号码</string>
+
+    <string name="search_title_dateoffset">时间段：</string>
+    <string name="search_title_keyword">关键字：</string>
+    <string name="search_btn_text">查询</string>
+    <string name="search_listview_item_timeoffset">执行时间段：</string>
+    <string name="search_listview_item_warntime">提醒时间</string>
 
     <string name="warncontrol_tv_warntype">提醒方式：</string>
     <string name="datetimeformat">yyyy-MM-dd HH:mm:ss</string>
@@ -151,31 +178,44 @@
             name VARCHAR( 20 ),
             Enable INT
             );</item>
-        <item>            CREATE TABLE Level (
+        <item>CREATE TABLE Level (
             id INT PRIMARY KEY,
             name VARCHAR( 20 )
             );</item>
+        <item>CREATE VIEW itemCurrentStatus
+            AS
+            select * from itemstatus group by itemid;
+        </item>
     </array>
     <array name="initData">
-        <item>insert into backuptype(id,name) values(1,"'本地备份'");</item>
-        <item>insert into backuptype(id,name) values(2,"'邮箱备份'");</item>
-        <item>insert into status(id,name) values(1,"'执行中'");</item>
-        <item>insert into status(id,name) values(2,"'完成'");</item>
-        <item>insert into status(id,name) values(3,"'滞后'");</item>
-        <item>insert into status(id,name) values(4,"'删除'");</item>
-        <item>insert into status(id,name) values(5,"'备忘录'");</item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(1,"'消息'",0,"''",0);</item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(2,"'震动'",0,"''",0);</item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(3,"'铃声'",0,"''",0);</item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(4,"'短信'",0,"''",0);</item>
-        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(5,"'语音'",0,"''",0);</item>
-        <item>insert into permission(id,name,enable) values(1,"'通讯录'",0);</item>
-        <item>insert into permission(id,name,enable) values(2,"'短信'",0);</item>
-        <item>insert into permission(id,name,enable) values(3,"'通讯记录'",0);</item>
-        <item>insert into permission(id,name,enable) values(4,"'语音'",0);</item>
-        <item>insert into level(id,name) values(1,"'低'");</item>
-        <item>insert into level(id,name) values(2,"'中'");</item>
-        <item>insert into level(id,name) values(3,"'高'");</item>
+        <item>insert into backuptype(id,name) values(0,"'本地备份'");</item>
+        <item>insert into backuptype(id,name) values(1,"'邮箱备份'");</item>
+        <item>insert into status(id,name) values(0,"'执行中'");</item>
+        <item>insert into status(id,name) values(1,"'完成'");</item>
+        <item>insert into status(id,name) values(2,"'未开始'");</item>
+        <item>insert into status(id,name) values(3,"'回收站'");</item>
+        <item>insert into status(id,name) values(4,"'备忘录'");</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(0,"'消息'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(1,"'震动'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(2,"'铃声'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(3,"'短信'",0,"''",0);</item>
+        <item>insert into notice(id,name,enable,ringpath,zhendongnum) values(4,"'语音'",0,"''",0);</item>
+        <item>insert into permission(id,name,enable) values(0,"'通讯录'",0);</item>
+        <item>insert into permission(id,name,enable) values(1,"'短信'",0);</item>
+        <item>insert into permission(id,name,enable) values(2,"'通讯记录'",0);</item>
+        <item>insert into permission(id,name,enable) values(3,"'语音'",0);</item>
+        <item>insert into level(id,name) values(0,"'低'");</item>
+        <item>insert into level(id,name) values(1,"'中'");</item>
+        <item>insert into level(id,name) values(2,"'高'");</item>
+    </array>
+    <array name="delaytimes">
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>4小时</item>
+        <item>1天</item>
+        <item>2天</item>
+        <item>4天</item>
+        <item>1周</item>
     </array>
 
     <string name="title_activity_add_item">AddItem</string>

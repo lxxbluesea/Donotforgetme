@@ -85,12 +85,12 @@ public class Import_Contact extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Contact contact = contactList.get(position);
-            final String result = "联系人[姓名：" + contact.getDisplayName() + "，手机号码：" + contact.getNumber()+"]";
+            final String result = "来自：联系人,\n姓名：" + contact.getDisplayName() + "，\n手机号码：" + contact.getNumber()+"\n";
             AlertDialog.Builder dialog=new AlertDialog.Builder(Import_Contact.this);
             dialog.setIcon(R.drawable.ic_launcher);
-            dialog.setTitle(getResources().getString(R.string.import_normal_warn));
+            dialog.setTitle(R.string.import_normal_warn);
             dialog.setMessage("是否导入?" + result);
-            dialog.setPositiveButton(getResources().getString(R.string.normal_confirm), new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton(R.string.normal_confirm, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent();
@@ -99,7 +99,7 @@ public class Import_Contact extends Activity {
                     finish();
                 }
             });
-            dialog.setNegativeButton(getResources().getString(R.string.normal_cancel),new DialogInterface.OnClickListener() {
+            dialog.setNegativeButton(R.string.normal_cancel,new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

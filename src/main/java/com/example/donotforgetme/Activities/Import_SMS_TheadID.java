@@ -79,12 +79,12 @@ public class Import_SMS_TheadID extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             SMSInfo smsInfo = smsInfoList.get(position);
-            final String result = "短信[姓名：" + smsInfo.getPerson() + "，手机号码：" + smsInfo.getAddress()+"日期："+smsInfo.getDate()+",内容："+smsInfo.getBody()+"]";
+            final String result = "来自：短信，\n姓名：" + smsInfo.getPerson() + "，\n手机号码：" + smsInfo.getAddress()+",\n日期："+smsInfo.getDate()+",\n内容："+smsInfo.getBody()+"\n";
             AlertDialog.Builder dialog=new AlertDialog.Builder(Import_SMS_TheadID.this);
             dialog.setIcon(R.drawable.ic_launcher);
-            dialog.setTitle(getResources().getString(R.string.import_normal_warn));
-            dialog.setMessage("是否导入?"+result);
-            dialog.setPositiveButton(getResources().getString(R.string.normal_confirm),new DialogInterface.OnClickListener() {
+            dialog.setTitle(R.string.import_normal_warn);
+            dialog.setMessage("是否导入?\n"+result);
+            dialog.setPositiveButton(R.string.normal_confirm,new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent();
@@ -93,7 +93,7 @@ public class Import_SMS_TheadID extends Activity {
                     finish();
                 }
             });
-            dialog.setNegativeButton(getResources().getString(R.string.normal_cancel),new DialogInterface.OnClickListener() {
+            dialog.setNegativeButton(R.string.normal_cancel,new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

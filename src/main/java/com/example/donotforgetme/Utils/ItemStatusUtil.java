@@ -46,6 +46,8 @@ public class ItemStatusUtil {
     {
         ItemStatus status=new ItemStatus();
         status.setItemID(item.getID());
+        status.setOpDateTime(DateUtil.getNow());
+        status.setNote("初始状态");
         status.setStatusID(StatusUtil.getInstance().getStatusByID(StatusUtil.EXECUTE).getID());//获各一条执行状态的对象
         return status;
     }
@@ -60,6 +62,8 @@ public class ItemStatusUtil {
     {
         ItemStatus status=new ItemStatus();
         status.setItemID(item.getID());
+        status.setOpDateTime(DateUtil.getNow());
+        status.setNote("");
         status.setStatusID(StatusUtil.getInstance().getStatusByID(type).getID());//获各一条执行状态的对象
         return status;
     }
@@ -79,6 +83,25 @@ public class ItemStatusUtil {
             return null;
         else
             return statusList.get(0);
+    }
+
+    public boolean backCurrentStatus() {
+        boolean result = false;
+        List<ItemStatus> statusList = new ArrayList<ItemStatus>();
+        Cursor cursor = DB.query(TableName, columns, "itemid=?", new String[]{item.getID() + ""}, null, null, sortBy, "2");
+
+        getItemStatus(cursor, statusList);
+        if (statusList.isEmpty())
+            result = false;
+        else if (statusList.size() > 1) {
+            ItemStatus tmpstatus = statusList.get(1);
+            ItemStatus newstatus = getItemStatus(tmpstatus.getStatusID());
+            newstatus.setItemID(tmpstatus.getItemID());
+            newstatus.setNote(ApplicationUtil.getContext().getString(R.string.listview_item_back_note));
+            result = AddItemStatus(newstatus);
+        } else
+            result = false;
+        return result;
     }
 
     /**

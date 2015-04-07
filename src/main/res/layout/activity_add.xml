@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/background">
+            android:background="@drawable/background"            >
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -34,6 +34,7 @@
                     <TextView
                         android:layout_width="@dimen/add_tv_content_width"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_tv_content" />
 
                     <EditText
@@ -43,15 +44,15 @@
                         android:minHeight="@dimen/add_et_content_height"
                         android:singleLine="false"
                         android:layout_weight="1"
+                        android:textSize="@dimen/normal_text_size"
                         android:background="@drawable/edittext_selector" />
 
                     <Button
                         android:id="@+id/add_btn_import"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusable="true"
                         android:text="@string/add_btn_import"
-                        android:layout_margin="@dimen/normalmargin"
+                        android:textSize="@dimen/normal_text_size"
                         android:background="@drawable/btn_background" />
                 </LinearLayout>
             </ScrollView>
@@ -67,12 +68,13 @@
                     android:layout_width="@dimen/add_tv_content_width"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="left">
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_tv_quickadd" />
 
 
@@ -92,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_rb_onehour" />
 
                     <RadioButton
@@ -99,6 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_rb_twohours" />
 
                     <RadioButton
@@ -106,6 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_rb_fourhours" />
 
                     <RadioButton
@@ -113,6 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_rb_oneday" />
 
                     <RadioButton
@@ -120,6 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textSize="@dimen/normal_text_size"
                         android:text="@string/add_rb_twodays" />
 
                     <!--<RadioButton-->
@@ -142,14 +149,16 @@
                 <TextView
                     android:layout_width="@dimen/add_tv_content_width"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/normal_text_size"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/add_tv_startdate" />
 
                 <Button
                     android:id="@+id/add_btn_startdate"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_et_height"
-                    android:gravity="left"
                     android:layout_weight="1"
+                    android:textSize="@dimen/normal_text_size"
                     android:background="@drawable/button_selector" />
 
 
@@ -164,6 +173,8 @@
                 <TextView
                     android:layout_width="@dimen/add_tv_content_width"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/normal_text_size"
                     android:text="@string/add_tv_enddate" />
 
                 <Button
@@ -171,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_et_height"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:textSize="@dimen/normal_text_size"
                     android:background="@drawable/button_selector" />
 
 
@@ -207,6 +218,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textSize="@dimen/normal_text_size"
                             android:layout_margin="@dimen/normalmargin"
                             android:background="@drawable/btn_background"
                             android:text="@string/add_btn_add_warn_text" />
@@ -216,6 +228,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textSize="@dimen/normal_text_size"
                             android:layout_margin="@dimen/normalmargin"
                             android:background="@drawable/btn_background"
                             android:text="@string/add_btn_delete_warn_text" />

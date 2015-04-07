@@ -21,12 +21,20 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:text="@string/add_tv_content"/>
+
             <TextView
-                android:id="@+id/listview_item_lv_title"
+                android:id="@+id/listview_item_execute_lv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="111111111111111111" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line1"
+                android:scaleType="fitXY" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,25 +47,7 @@
                     android:orientation="horizontal"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/listview_item_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="222222222"
-                        android:layout_weight="1" />
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
-
-                    <TextView
-                        android:id="@+id/listview_item_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="333333333333" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -74,22 +64,22 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/listview_item_btn_detail"
+                    android:id="@+id/listview_item_execute_btn_warntimes"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_listview_item_button_height"
                     android:background="@drawable/menubackground"
-                    android:text="@string/title_activity_detail"
+                    android:text="@string/listview_item_btn_detail"
                     android:textSize="@dimen/normal_listview_item_button_text_size"
                     android:layout_weight="1" />
 
-                <ImageView android:id="@+id/listview_item_iv_1"
+                <ImageView android:id="@+id/listview_item_execute_iv_1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/fenge"
                     android:scaleType="fitXY" />
 
                 <Button
-                    android:id="@+id/listview_item_btn_finish"
+                    android:id="@+id/listview_item_execute_btn_finish"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_listview_item_button_height"
                     android:background="@drawable/menubackground"
@@ -97,29 +87,29 @@
                     android:textSize="@dimen/normal_listview_item_button_text_size"
                     android:layout_weight="1" />
 
-                <ImageView android:id="@+id/listview_item_iv_2"
+                <ImageView android:id="@+id/listview_item_execute_iv_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/fenge"
                     android:scaleType="fitXY" />
 
                 <Button
-                    android:id="@+id/listview_item_btn_delay"
+                    android:id="@+id/listview_item_execute_btn_delay"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_listview_item_button_height"
                     android:background="@drawable/menubackground"
-                    android:text="@string/title_activity_delay"
+                    android:text="@string/listview_item_btn_delay"
                     android:textSize="@dimen/normal_listview_item_button_text_size"
                     android:layout_weight="1" />
 
-                <ImageView android:id="@+id/listview_item_iv_3"
+                <ImageView android:id="@+id/listview_item_execute_iv_3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/fenge"
                     android:scaleType="fitXY" />
 
                 <Button
-                    android:id="@+id/listview_item_btn_delete"
+                    android:id="@+id/listview_item_execute_btn_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/normal_listview_item_button_height"
                     android:background="@drawable/menubackground"
@@ -127,20 +117,8 @@
                     android:textSize="@dimen/normal_listview_item_button_text_size"
                     android:layout_weight="1" />
 
-                <ImageView android:id="@+id/listview_item_iv_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/fenge"
-                    android:scaleType="fitXY" />
 
-                <Button
-                    android:id="@+id/listview_item_btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/normal_listview_item_button_height"
-                    android:background="@drawable/menubackground"
-                    android:text="@string/title_activity_back"
-                    android:textSize="@dimen/normal_listview_item_button_text_size"
-                    android:layout_weight="1" />
+
             </LinearLayout>
         </LinearLayout>
 

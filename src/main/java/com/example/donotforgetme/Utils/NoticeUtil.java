@@ -22,7 +22,7 @@ public class NoticeUtil {
     SQLiteDatabase DB;
     String[] columns={"id","name","enable","ringpath","zhendongnum"};
     String sortBy="id asc";
-    public static final int NOTICE=1,ZHENDONG=2,RING=3,SMS=4,VOICE=5;
+    public static final int NOTICE=0,ZHENDONG=1,RING=2,SMS=3,VOICE=4;
     private NoticeUtil() {
         TableName = ApplicationUtil.getContext().getResources().getString(R.string.noticetable);
         DB = MyDbHelper.getDBInstance();
